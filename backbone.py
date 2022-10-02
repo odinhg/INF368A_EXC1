@@ -1,6 +1,3 @@
-# Add backbone classifier here...
-# Base it on a pre-trained EfficientNet v2 (small)
-
 import torch
 import torch.nn as nn
 from torchsummary import summary
