@@ -43,5 +43,9 @@ def FlowCamDataLoader(class_names, image_size = (300, 300), val = 0.1, test = 0.
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_dataloader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=True)
     test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    
+    print(f"Training data: {len(train_dataloader)*batch_size} images.")
+    print(f"Validation data: {len(val_dataloader)*batch_size} images.")
+    print(f"Test data: {len(test_dataloader)*batch_size} images.")
 
     return train_dataloader, val_dataloader, test_dataloader
