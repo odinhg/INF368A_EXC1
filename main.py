@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import pandas as pd
 import torch.optim as optim
 import torch.nn as nn
 from os import listdir
@@ -16,9 +17,9 @@ if __name__ == "__main__":
     batch_size = 64
     epochs = 50 
     lr = 0.0014
-    val = 0.05 #Use 10% for validation data 
+    val = 0.05 #Use 5% for validation data 
     test = 0.2 #Use 20% for test data
-    image_size = (300, 300)
+    image_size = (200, 200)
     number_of_classes = len(class_names)
     
     device = torch.device('cuda:4') 
@@ -48,15 +49,15 @@ if __name__ == "__main__":
         
         correct_pred = {classname: 0 for classname in class_names}
         total_pred = {classname: 0 for classname in class_names}
-
-        # again no gradients needed
+        
+        embeddings = []
         with torch.no_grad():
             print("Evaluating model on test data...")
             for data in tqdm(test_dataloader):
                 images, labels = data[0].to(device), data[1].to(device)
-                outputs = classifier(images)
+                outputs, activations_second_last_layer = classifier(images)
+                embeddings += activations_second_last_layer.cpu().detach().tolist()
                 _, predictions = torch.max(outputs, 1)
-                # collect the correct predictions for each class
                 for label, prediction in zip(labels, predictions):
                     if label == prediction:
                         correct_pred[class_names[label]] += 1
@@ -66,5 +67,17 @@ if __name__ == "__main__":
         for classname, correct_count in correct_pred.items():
             accuracy = 100 * float(correct_count) / total_pred[classname]
             print(f'\"{classname}\" {accuracy:.1f} %')
+        
+        # evaluate on unseen classes here
+        embeddings_df = pd.DataFrame(data=embeddings)
+        embeddings_df.describe()
+        # pickle dataframe
 
-
+#TODO
+# - Create a settings file with class_names, class_names_unseen, epochs, learning_rate, etc...
+# - Split main into train.py (only train if no checkpoint exists), evaluate.py (load checkpoint, 
+#   evaluate on test set and print accuracies, also saves embeddings of test data and unseen classes 
+#   to datafram pickle file)
+# - Create analyse.py which loads the embeddings, compute average distances (both angular and euclidean) between classes and within classes, also do dimensionality reduction and visualize
+# - retrieve_examples.py: for each class show closest and furthest in-class objects and closest objects from other classes
+# - transfer_learning.py: load the unseen classes into train, validation and test set, train a classifier after the embedding (linear, SVM and/or kNN classifier)
