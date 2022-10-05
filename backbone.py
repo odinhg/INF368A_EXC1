@@ -25,15 +25,6 @@ class BackBone(nn.Module):
                         stride=1,
                         padding=1
                         ),
-                    #nn.BatchNorm2d(640),
-                    #nn.ReLU(),
-                    #nn.Conv2d(
-                    #    in_channels=640,
-                    #    out_channels=640,
-                    #    kernel_size=3,
-                    #    stride=1,
-                    #    padding=1
-                    #    ),
                     nn.BatchNorm2d(640),
                     nn.ReLU(),
                     nn.Conv2d(

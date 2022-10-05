@@ -9,21 +9,23 @@
 ### Evaluating
 - To evaluate the classifier on test data, run *evaluate.py*.
 - The total accuracy and accuracy for each class the model is trained on will be printed.
-- Embeddings (activations in the second to last layer) of the seen classes and unseen classes will be saved to a pandas data frame *embeddings.pkl*
+
+### Embedding
+- To compute and save embeddings (activations in the second to last layer) as pickled pandas dataframes, run *embed.py*
+- Embeddings are saved in *embeddings_train.pkl*, *embeddings_test.pkl* and *embeddings_unseen.pkl* for train data, test data, and unseen classes, respectively.
+- First column is label (index), the rest are activations.
 
 ### Configuration
 In *configfile.py* one can set the most important settings before training and evaluating the model.
 
-- *class_names*: Names of the classes to train the classifier on.
-- *class_names_unseen*: Names of the classes not trained on but to be embedded when evaluating.
-- *batch_size*: Batch size
-- *epochs*: Epochs to train. Note that early stopping is implemented so this is the maximum number of epochs.
-- *lr*: Learning rate (optimizer is Adam).
-- *val*: Fraction of data to be used as validation data.
-- *test*: Fraction of data to be used as test data.
-- *image_size*: Image size going into the model. (Resize is done in the dataloader).
-- *device*: CUDA device to use.
-
 ## Architecure / Backbone
+The backbone consists of the following:
+- 1x (frozen) EfficientNet v2 (using small weights)
+- 2x Convolutional layers (with 3x3 kernel) with ReLU activation and batch normalization
+- 1x Max pooling layer
+- 1x Fully connected layer with ReLU activation
+- 1x Drop out layer (p=0.2)
+- 1x Fully connected layer
 
+Full specifications can be seen in *backbone.py*.
 

@@ -52,24 +52,3 @@ if __name__ == "__main__":
             correct += correct_count
         total_accuracy = 100 * correct / total
         print(f"Total accuracy: {total_accuracy:.2f}%")
-        
-        print("Loading dataset with unseen classes.")
-        unseen_dataloader = FlowCamDataLoader(class_names_unseen, image_size=image_size, batch_size=batch_size, split=False)
-        with torch.no_grad():
-            print("Computing embeddings for unseen data.")
-            for data in tqdm(unseen_dataloader):
-                images, labels = data[0].to(device), data[1].to(device)
-                _, activations_second_last_layer = classifier(images) #We don't care about predictions, just embeddings
-                embeddings += [[int(label), 1]  + activation for activation, label in zip(activations_second_last_layer.cpu().detach().tolist(), labels.cpu().detach().tolist())]
-
-        #Convert embeddings to pandas dataframe
-        embeddings_df = pd.DataFrame(data=embeddings)
-        embeddings_df.columns = ["label_idx", "unseen"] + [f"X{i}" for i in range(0, len(embeddings_df.columns) - 2)]
-        embeddings_df = embeddings_df.loc[:, embeddings_df.any()] #Remove all-zero columns
-        embeddings_df.to_pickle("embeddings.pkl")
-        print(f"Saved embeddings of {embeddings_df.shape[0]} images in {embeddings_df.shape[1] - 2} dimensions.")
-
-#TODO
-# - Create analyse.py which loads the embeddings, compute average distances (both angular and euclidean) between classes and within classes, also do dimensionality reduction and visualize
-# - retrieve_examples.py: for each class show closest and furthest in-class objects and closest objects from other classes
-# - transfer_learning.py: load the unseen classes into train, validation and test set, train a classifier after the embedding (linear, SVM and/or kNN classifier)
