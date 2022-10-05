@@ -23,7 +23,7 @@ if __name__ == "__main__":
     if not isfile("./checkpoints/best.pth"):
         print("No checkpoint found! Please run training before evaluating model.")
     else:
-        print("Loading checkpoint...")
+        print("Loading checkpoint.")
         classifier.load_state_dict(torch.load("./checkpoints/best.pth"))
         
         correct_pred = {classname: 0 for classname in class_names}
@@ -31,32 +31,45 @@ if __name__ == "__main__":
         
         embeddings = []
         with torch.no_grad():
-            print("Evaluating model on test data...")
+            print("Evaluating model on test data.")
             for data in tqdm(test_dataloader):
                 images, labels = data[0].to(device), data[1].to(device)
                 outputs, activations_second_last_layer = classifier(images)
-                embeddings += activations_second_last_layer.cpu().detach().tolist()
+                embeddings += [[int(label), 0]  + activation for activation, label in zip(activations_second_last_layer.cpu().detach().tolist(), labels.cpu().detach().tolist())]
                 _, predictions = torch.max(outputs, 1)
                 for label, prediction in zip(labels, predictions):
                     if label == prediction:
                         correct_pred[class_names[label]] += 1
                     total_pred[class_names[label]] += 1
-
-        print("Class accuracies:")
-        for classname, correct_count in correct_pred.items():
-            accuracy = 100 * float(correct_count) / total_pred[classname]
-            print(f'\"{classname}\" {accuracy:.1f} %')
         
-        # evaluate on unseen classes here
+        #Calculate accuracies
+        correct = 0
+        total = 0
+        for classname, correct_count in correct_pred.items():
+            accuracy = 100 * correct_count / total_pred[classname]
+            print(f"\"{classname}\" {accuracy:.2f}%")
+            total += total_pred[classname]
+            correct += correct_count
+        total_accuracy = 100 * correct / total
+        print(f"Total accuracy: {total_accuracy:.2f}%")
+        
+        print("Loading dataset with unseen classes.")
+        unseen_dataloader = FlowCamDataLoader(class_names_unseen, image_size=image_size, batch_size=batch_size, split=False)
+        with torch.no_grad():
+            print("Computing embeddings for unseen data.")
+            for data in tqdm(unseen_dataloader):
+                images, labels = data[0].to(device), data[1].to(device)
+                _, activations_second_last_layer = classifier(images) #We don't care about predictions, just embeddings
+                embeddings += [[int(label), 1]  + activation for activation, label in zip(activations_second_last_layer.cpu().detach().tolist(), labels.cpu().detach().tolist())]
+
+        #Convert embeddings to pandas dataframe
         embeddings_df = pd.DataFrame(data=embeddings)
-        embeddings_df.describe()
-        # pickle dataframe
+        embeddings_df.columns = ["label_idx", "unseen"] + [f"X{i}" for i in range(0, len(embeddings_df.columns) - 2)]
+        embeddings_df = embeddings_df.loc[:, embeddings_df.any()] #Remove all-zero columns
+        embeddings_df.to_pickle("embeddings.pkl")
+        print(f"Saved embeddings of {embeddings_df.shape[0]} images in {embeddings_df.shape[1] - 2} dimensions.")
 
 #TODO
-# - Create a settings file with class_names, class_names_unseen, epochs, learning_rate, etc...
-# - Split main into train.py (only train if no checkpoint exists), evaluate.py (load checkpoint, 
-#   evaluate on test set and print accuracies, also saves embeddings of test data and unseen classes 
-#   to datafram pickle file)
 # - Create analyse.py which loads the embeddings, compute average distances (both angular and euclidean) between classes and within classes, also do dimensionality reduction and visualize
 # - retrieve_examples.py: for each class show closest and furthest in-class objects and closest objects from other classes
 # - transfer_learning.py: load the unseen classes into train, validation and test set, train a classifier after the embedding (linear, SVM and/or kNN classifier)
