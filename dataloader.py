@@ -32,13 +32,17 @@ class FlowCamDataSet(Dataset):
     def __len__(self):
         return self.number_of_images
 
-def FlowCamDataLoader(class_names, image_size = (300, 300), val = 0.1, test = 0.2, batch_size = 32):
+def FlowCamDataLoader(class_names, image_size = (300, 300), val = 0.1, test = 0.2, batch_size = 32, split=True):
     dataset = FlowCamDataSet(class_names, image_size)
+    if not split:
+        dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
+        return dataloader
+
     #Split into train and test data
     val_size = int(val * len(dataset))
     test_size = int(test * len(dataset))
     train_size = len(dataset) - val_size - test_size
-    train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(dataset, [train_size, val_size, test_size])
+    train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(dataset, [train_size, val_size, test_size], generator=torch.Generator().manual_seed(420))
 
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_dataloader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=True)

@@ -13,8 +13,6 @@ from trainer import train_model
 from backbone import BackBone
 
 if __name__ == "__main__":
-    torch.manual_seed(0)
-    
     #Load custom dataset
     train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_size, val, test,  batch_size)
 

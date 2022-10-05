@@ -3,6 +3,7 @@ from dataloader import FlowCamDataLoader
 
 torch.manual_seed(0)
 
+# Settings
 class_names = ["Bacillariophyceae", "Rhizosoleniaceae", "Melosiraceae", "Coscinodiscaceae"]
 class_names_unseen = ["Dinophyceae", "Chaetoceros", "nauplii"]
 batch_size = 64

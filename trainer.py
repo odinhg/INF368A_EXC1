@@ -3,7 +3,7 @@ from tqdm import tqdm
 import numpy as np
 
 class EarlyStopper():
-    def __init__(self, limit = 8, min_change = 0):
+    def __init__(self, limit = 12, min_change = 0):
         self.limit = limit
         self.min_change = min_change
         self.min_loss = np.inf
@@ -21,7 +21,7 @@ class EarlyStopper():
 
 def train_model(classifier, train_dataloader, val_dataloader, loss_function, optimizer, epochs, device):
     train_history = {"train_loss":[], "train_accuracy":[], "val_loss":[], "val_accuracy":[]}
-    steps = len(train_dataloader) // 4 #Compute validation and train loss 4 times every epoch
+    steps = len(train_dataloader) // 5 #Compute validation and train loss 5 times every epoch
     earlystop = EarlyStopper()
     for epoch in range(epochs):
         train_losses = []
