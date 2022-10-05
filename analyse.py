@@ -25,6 +25,7 @@ def save_distance_figure(distances, class_names, filename):
     fig.colorbar(cax)
     ax.set_xticklabels([''] + class_names, rotation=45, ha="left")
     ax.set_yticklabels([''] + class_names)
+    fig.tight_layout()
     plt.savefig(filename)
     plt.cla()
 
