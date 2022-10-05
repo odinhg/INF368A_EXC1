@@ -5,6 +5,7 @@ from os.path import isfile, join
 from tqdm import tqdm
 from configfile import *
 from scipy.spatial.distance import cdist
+import matplotlib.pyplot as plt
 
 def compute_average_distances(classes):
     avg_euclidean_distances = np.zeros((len(classes), len(classes)))
@@ -17,6 +18,16 @@ def compute_average_distances(classes):
             avg_angular_distances[i,j] = avg_angular_distance
     return (avg_euclidean_distances, avg_angular_distances)
 
+def save_distance_figure(distances, class_names, filename):
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(distances, interpolation="nearest")
+    fig.colorbar(cax)
+    ax.set_xticklabels([''] + class_names)
+    ax.set_yticklabels([''] + class_names)
+    plt.savefig(filename)
+    plt.cla()
+
 if __name__ == "__main__":
     if not (isfile("embeddings_train.pkl") and isfile("embeddings_test.pkl") and isfile("embeddings_test.pkl")):
         exit("Embeddings not found. Please evaluate model first!")
@@ -26,14 +37,19 @@ if __name__ == "__main__":
     avg_euclidean_distances, avg_angular_distances = compute_average_distances(classes)
     print("Average euclidean distances (test dataset):")
     print(avg_euclidean_distances)
+    save_distance_figure(avg_euclidean_distances, class_names, "average_euclidean_distances_test.png")
     print("Average angular distances (test dataset):")
     print(avg_angular_distances)
+    save_distance_figure(avg_angular_distances, class_names, "average_angular_distances_test.png")
     
+
     #Task 5
     df = pd.read_pickle("embeddings_unseen.pkl")
     classes = [df[df["label_idx"] == i].iloc[:,1:] for i in class_idx_unseen]
     avg_euclidean_distances, avg_angular_distances = compute_average_distances(classes)
     print("Average euclidean distances (unseen classes):")
     print(avg_euclidean_distances)
+    save_distance_figure(avg_euclidean_distances, class_names_unseen, "average_euclidean_distances_unseen.png")
     print("Average angular distances (unseen classes):")
     print(avg_angular_distances)
+    save_distance_figure(avg_angular_distances, class_names_unseen, "average_angular_distances_unseen.png")
