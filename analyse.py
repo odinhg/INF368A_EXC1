@@ -23,7 +23,7 @@ def save_distance_figure(distances, class_names, filename):
     ax = fig.add_subplot(111)
     cax = ax.matshow(distances, interpolation="nearest")
     fig.colorbar(cax)
-    ax.set_xticklabels([''] + class_names, rotation=45, ha="right")
+    ax.set_xticklabels([''] + class_names, rotation=45, ha="left")
     ax.set_yticklabels([''] + class_names)
     plt.savefig(filename)
     plt.cla()
