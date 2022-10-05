@@ -30,7 +30,8 @@ To train the network, execute *train.py*. The best model is saved to *checkpoint
 The classifier takes just over 1 minute to train on the selected dataset and early stops during epoch 5.
 
 ### Accuracies on test data
-*Class accuracies:*
+To evaluate the classifier on test data, run *evaluate.py*.
+**Class accuracies:**
 *chainthin:* 97.92%
 *darksphere:* 98.82%
 *Rhabdonellidae:* 90.18%
@@ -40,7 +41,6 @@ The classifier takes just over 1 minute to train on the selected dataset and ear
 
 *Total accuracy:* 96.14%
 
-To evaluate the classifier on test data, run *evaluate.py*. The total accuracy and accuracy for each class will be printed as shown above.
 
 
 
