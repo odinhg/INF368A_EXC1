@@ -1,7 +1,40 @@
 # INF368A Exercise 1
 
-## Task 1
-## Task 2
+## Task 1 and 2
+### Seen classes
+The following classes (with around 1-2k images each) where used for the train/validation/test data:
+
+*chainthin:* 1747 images (21.37%).                                                                                                                                                                                                                                      
+
+*darksphere:* 1704 images (20.85%).                                                                                                                                                                                                                                     
+
+*Rhabdonellidae:* 1088 images (13.31%).                                                                                                                                                                                                                                 
+
+*Odontella:* 1140 images (13.95%).                                                                                                                                                                                                                                      
+
+*Codonellopsis:* 1205 images (14.74%).                                                                                                                                                                                                                                  
+
+*Neoceratium:* 1290 images (15.78%).                                                                                                                                                                                                                                    
+
+*Total:* 8174 images.                                                                                                                                                                                                                                                     
+**Split:**
+
+*Training data:* 6144 images.                                                                                                                                                                                                                                             
+
+*Validation data:* 448 images.                                                                                                                                                                                                                                            
+
+*Test data:* 1664 images. 
+
+### Unseen classes
+The following classes where selected as unseen classes:
+
+*Retaria:* 1360 images (29.17%).
+
+*Thalassionematales:* 868 images (18.61%).
+
+*Chaetoceros:* 2435 images (52.22%).
+
+*Total:* 4663 images.
 
 ## Task 3
 ### Architecure / Backbone
@@ -31,12 +64,19 @@ The classifier takes just over 1 minute to train on the selected dataset and ear
 
 ### Accuracies on test data
 To evaluate the classifier on test data, run *evaluate.py*.
+
 **Class accuracies:**
+
 *chainthin:* 97.92%
+
 *darksphere:* 98.82%
+
 *Rhabdonellidae:* 90.18%
+
 *Odontella:* 94.40%
+
 *Codonellopsis:* 97.12%
+
 *Neoceratium:* 96.30%
 
 *Total accuracy:* 96.14%
