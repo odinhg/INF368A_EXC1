@@ -63,7 +63,6 @@ if __name__ == "__main__":
     plt.savefig("umap_embeddings.png")
     
     # Find samples closest to and furthest away from class center
-    #train_dataset = FlowCamDataLoader(class_names, image_size)[3]
     dataset = FlowCamDataSet(class_names, image_size)
     df_projections_train = pd.DataFrame(df_projection_train, index=df_train.index, columns=["x", "y"])
     for i in class_idx:
@@ -74,10 +73,9 @@ if __name__ == "__main__":
         distances = cdist([center], df_class.iloc[:,2:] , metric="euclidean")[0]
         df_class["distance_to_center"] = distances
         df_class = df_class.sort_values(by=["distance_to_center"])
-        closest = df_class.iloc[:3, :]
-        furthest = df_class.iloc[-3:, :]
-        closest_images = torch.cat([dataset[i][0] for i in closest["image_idx"].tolist()], dim=1)
-        print(closest_images.shape)
-        furthest_images = torch.cat([dataset[i][0] for i in furthest["image_idx"].tolist()], dim=1)
-        image = F.to_pil_image(torch.cat((closest_images, furthest_images), dim=2))
+        closest = df_class.iloc[:5, :]
+        furthest = df_class.iloc[-5:, :]
+        closest_images = torch.cat([dataset[i][0] for i in closest["image_idx"].tolist()], dim=2)
+        furthest_images = torch.cat([dataset[i][0] for i in furthest["image_idx"].tolist()], dim=2)
+        image = F.to_pil_image(torch.cat((closest_images, furthest_images), dim=1))
         image.save(f"closest_and_furthest_images_class_{i}.png")
