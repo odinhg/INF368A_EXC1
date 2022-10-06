@@ -28,18 +28,18 @@ if __name__ == "__main__":
     df_all = pd.concat([df_test, df_train, df_unseen])
     
     # Standardize features
-    standard_scaler = StandardScaler().fit(df_all.iloc[:,1:])
-    df_test.iloc[:,1:] = standard_scaler.transform(df_test.iloc[:,1:])
-    df_train.iloc[:,1:] = standard_scaler.transform(df_train.iloc[:,1:])
-    df_unseen.iloc[:,1:] = standard_scaler.transform(df_unseen.iloc[:,1:])
-    df_all.iloc[:,1:] = standard_scaler.transform(df_all.iloc[:,1:])
+    standard_scaler = StandardScaler().fit(df_all.iloc[:,2:])
+    df_test.iloc[:,2:] = standard_scaler.transform(df_test.iloc[:,2:])
+    df_train.iloc[:,2:] = standard_scaler.transform(df_train.iloc[:,2:])
+    df_unseen.iloc[:,2:] = standard_scaler.transform(df_unseen.iloc[:,2:])
+    df_all.iloc[:,2:] = standard_scaler.transform(df_all.iloc[:,2:])
 
     # Fit UMAP and reduce dimensions
     reducer = umap.UMAP(verbose=True)
-    reducer.fit(df_all.iloc[:,1:])
-    df_projection_test = reducer.transform(df_test.iloc[:,1:])
-    df_projection_train = reducer.transform(df_train.iloc[:,1:])
-    df_projection_unseen = reducer.transform(df_unseen.iloc[:,1:])
+    reducer.fit(df_all.iloc[:,2:])
+    df_projection_test = reducer.transform(df_test.iloc[:,2:])
+    df_projection_train = reducer.transform(df_train.iloc[:,2:])
+    df_projection_unseen = reducer.transform(df_unseen.iloc[:,2:])
 
     # Generate and save plot
     fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(12, 4))

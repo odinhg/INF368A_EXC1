@@ -17,11 +17,11 @@ def save_embeddings(classifier, class_idx, dataloader, filename):
     classifier.eval()
     with torch.no_grad():
         for data in tqdm(dataloader):
-            images, labels = data[0].to(device), data[1].to(device)
+            images, labels, indicies = data[0].to(device), data[1].to(device), data[2].to(device)
             _, activations_second_last_layer = classifier(images) #We don't care about predictions, just embeddings
-            embeddings += [[int(class_idx[label])]  + activation for activation, label in zip(activations_second_last_layer.cpu().detach().tolist(), labels.cpu().detach().tolist())]
+            embeddings += [[int(class_idx[label]), int(index)]  + activation for activation, label, index in zip(activations_second_last_layer.cpu().detach().tolist(), labels.cpu().detach().tolist(), indicies.cpu().detach().tolist())]
     df = pd.DataFrame(data=embeddings)
-    df.columns = ["label_idx"] + [f"X{i}" for i in range(1, df.shape[1])]
+    df.columns = ["label_idx", "image_idx"] + [f"X{i}" for i in range(1, df.shape[1] - 1)]
     df.to_pickle(filename)
     print(f"Dataframe ({df.shape[0]} x {df.shape[1]}) saved to {filename}")
 

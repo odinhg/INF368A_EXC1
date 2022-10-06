@@ -34,7 +34,7 @@ if __name__ == "__main__":
         exit("Embeddings not found. Please evaluate model first!")
     #Task 4
     df = pd.read_pickle("embeddings_test.pkl")
-    classes = [df[df["label_idx"] == i].iloc[:,1:] for i in class_idx]
+    classes = [df[df["label_idx"] == i].iloc[:,2:] for i in class_idx]
     avg_euclidean_distances, avg_angular_distances = compute_average_distances(classes)
     print("Average euclidean distances (test dataset):")
     print(avg_euclidean_distances)
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     
     #Task 5
     df = pd.read_pickle("embeddings_unseen.pkl")
-    classes = [df[df["label_idx"] == i].iloc[:,1:] for i in class_idx_unseen]
+    classes = [df[df["label_idx"] == i].iloc[:,2:] for i in class_idx_unseen]
     avg_euclidean_distances, avg_angular_distances = compute_average_distances(classes)
     print("Average euclidean distances (unseen classes):")
     print(avg_euclidean_distances)

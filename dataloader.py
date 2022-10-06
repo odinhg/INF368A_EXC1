@@ -27,7 +27,7 @@ class FlowCamDataSet(Dataset):
         filename, label = self.images[index]
         image = Image.open(filename).convert("RGB")
         image = self.transformations(image)
-        return (image, label, filename)
+        return (image, label, index)
 
     def __len__(self):
         return self.number_of_images
