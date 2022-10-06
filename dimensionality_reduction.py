@@ -25,7 +25,7 @@ if __name__ == "__main__":
     df_unseen = pd.read_pickle("embeddings_unseen.pkl")
     
     # Randomly subsample images
-    number_of_samples = 1500
+    number_of_samples = 2500
     df_test = sample_df(df_test, number_of_samples)
     df_train = sample_df(df_train, number_of_samples)
     df_unseen = sample_df(df_unseen, number_of_samples)

@@ -141,18 +141,18 @@ For the average angular distances, we observe the same thing as above: the class
 To obtain the plots in this task, run `dimensionality_reduction.py`.
 
 ### Dimensionality reduction via UMAP
-First, we randomly sample 1500 images from each of the datasets (train data, test data and unseen classes). Then we compute the embeddings of these 4500 points and fit UMAP on them reducing the dimensions from 128 to 2. At last, we plot the output from UMAP for each of the datasets and save the plot to `umap_embeddings.png`. Dimensionality reduction using t-SNE was also tested but was slower and did not give a noticeable better separation. Two dimension was choosen because it is easy to visualise in scatter plots.
+First, we randomly sample some of the images (~2000) from each of the datasets (train data, test data and unseen classes). Then we compute the embeddings of these points and fit UMAP on them reducing the dimensions from 128 to 2. At last, we plot the output from UMAP for each of the datasets and save the plot to `umap_embeddings.png`. Dimensionality reduction using t-SNE was also tested but was slower and did not give a noticeable better separation. Two dimension was choosen because it is easy to visualise in scatter plots.
 
 ![UMAP of embeddings](umap_embeddings.png)
 
 We see that the classes the classifier is trained on are well-separated even in 2 dimensions after applying UMAP. This holds true for both the test data and the training data. There seems to be some slight confusion in the test data between *Codonellopsis* and a few other classes. For the unseen classes, we observe some separation, but also some overlap. Especially the third unseen class *Chaetoceros*, overlap with both other unseen classes.
 
 ### Close and far-away samples
-We compute the center for each class and show the 5 closest images and the 5 furthest away images with respect to the Euclidean distance to their class center.
+We compute the center for each class and show the 5 closest images and the 5 furthest away images with respect to the Euclidean distance to their class center. The top and bottom row are the closest and furthest away images, respectively.
+
 ![Closest and furthest away samples in class 0](closest_and_furthest_images_class_0.png)
 ![Closest and furthest away samples in class 1](closest_and_furthest_images_class_1.png)
 ![Closest and furthest away samples in class 2](closest_and_furthest_images_class_2.png)
 ![Closest and furthest away samples in class 3](closest_and_furthest_images_class_3.png)
 ![Closest and furthest away samples in class 4](closest_and_furthest_images_class_4.png)
 ![Closest and furthest away samples in class 5](closest_and_furthest_images_class_5.png)
-(The top and bottom row are the closest and furthest away images, respectively.)
