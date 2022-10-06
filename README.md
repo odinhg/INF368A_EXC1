@@ -140,10 +140,10 @@ For the average angular distances, we observe the same thing as above: the class
 ## Task 6
 To obtain the plots in this task, run `dimensionality_reduction.py`.
 
-First, we randomly sample 1500 images from each of the datasets (train data, test data and unseen classes). Then we compute the embeddings of these 4500 points and fit UMAP on them reducing the dimensions from 128 to 2. At last, we plot the output from UMAP for each of the datasets and save the plot to `umap_embeddings.png`.
+First, we randomly sample 1500 images from each of the datasets (train data, test data and unseen classes). Then we compute the embeddings of these 4500 points and fit UMAP on them reducing the dimensions from 128 to 2. At last, we plot the output from UMAP for each of the datasets and save the plot to `umap_embeddings.png`. Dimensionality reduction using t-SNE was also tested but was slower and did not give a noticeable better separation. Two dimension was choosen because it is easy to visualise in scatter plots.
 
 ![UMAP of embeddings](umap_embeddings.png)
 
-We see that the classes the classifier is trained on are well-separated even in 2 dimensions after applying UMAP. This holds true for both the test data and the training data. For the unseen classes, we observe some separation, but also some overlap. Especially the third unseen class *Chaetoceros*, overlap with both other unseen classes.
+We see that the classes the classifier is trained on are well-separated even in 2 dimensions after applying UMAP. This holds true for both the test data and the training data. There seems to be some slight confusion in the test data between *Codonellopsis* and a few other classes. For the unseen classes, we observe some separation, but also some overlap. Especially the third unseen class *Chaetoceros*, overlap with both other unseen classes.
 
 

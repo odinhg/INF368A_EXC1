@@ -27,7 +27,7 @@ def train_model(classifier, train_dataloader, val_dataloader, loss_function, opt
         train_losses = []
         train_accuracies = []
         for i, data in enumerate((pbar := tqdm(train_dataloader))):
-            images, labels = data[0].to(device), data[1].to(device)
+            images, labels  = data[0].to(device), data[1].to(device)
             optimizer.zero_grad()
             outputs, _ = classifier(images)
             loss = loss_function(outputs, labels)
