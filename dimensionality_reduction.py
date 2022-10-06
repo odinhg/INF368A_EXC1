@@ -4,7 +4,11 @@ import matplotlib.pyplot as plt
 from os.path import isfile
 import umap.umap_ as umap
 from sklearn.preprocessing import StandardScaler
-from configfile import class_names, class_names_unseen
+from configfile import * 
+from scipy.spatial.distance import cdist
+from dataloader import FlowCamDataSet
+import torchvision.transforms.functional as F
+from PIL import Image
 
 def sample_df(df, n=100):
     if n > df.shape[0]:
@@ -41,7 +45,7 @@ if __name__ == "__main__":
     df_projection_train = reducer.transform(df_train.iloc[:,2:])
     df_projection_unseen = reducer.transform(df_unseen.iloc[:,2:])
 
-    # Generate and save plot
+    # Generate and save UMAP plots
     fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(12, 4))
     s = ax[0].scatter(df_projection_test[:,0], df_projection_test[:,1], c=df_test.label_idx, s=5)
     ax[0].set_aspect("equal", "datalim")
@@ -57,3 +61,23 @@ if __name__ == "__main__":
     ax[2].legend(handles=s.legend_elements()[0], labels=class_names_unseen)
     fig.tight_layout()
     plt.savefig("umap_embeddings.png")
+    
+    # Find samples closest to and furthest away from class center
+    #train_dataset = FlowCamDataLoader(class_names, image_size)[3]
+    dataset = FlowCamDataSet(class_names, image_size)
+    df_projections_train = pd.DataFrame(df_projection_train, index=df_train.index, columns=["x", "y"])
+    for i in class_idx:
+        class_indices = df_train.loc[df_train["label_idx"] == i].loc[:, ["label_idx", "image_idx"]]
+        class_projections = df_projections_train.loc[class_indices.index]
+        df_class = pd.concat([class_indices, class_projections], axis=1)
+        center = df_class.iloc[:,2:].mean()
+        distances = cdist([center], df_class.iloc[:,2:] , metric="euclidean")[0]
+        df_class["distance_to_center"] = distances
+        df_class = df_class.sort_values(by=["distance_to_center"])
+        closest = df_class.iloc[:3, :]
+        furthest = df_class.iloc[-3:, :]
+        closest_images = torch.cat([dataset[i][0] for i in closest["image_idx"].tolist()], dim=1)
+        print(closest_images.shape)
+        furthest_images = torch.cat([dataset[i][0] for i in furthest["image_idx"].tolist()], dim=1)
+        image = F.to_pil_image(torch.cat((closest_images, furthest_images), dim=2))
+        image.save(f"closest_and_furthest_images_class_{i}.png")

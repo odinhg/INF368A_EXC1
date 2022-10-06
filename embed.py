@@ -33,7 +33,7 @@ if __name__ == "__main__":
         classifier = BackBone(number_of_classes)
         classifier.to(device)
         #Load custom dataset
-        train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_size, val, test,  batch_size)
+        train_dataloader, val_dataloader, test_dataloader, _ = FlowCamDataLoader(class_names, image_size, val, test,  batch_size)
         unseen_dataloader = FlowCamDataLoader(class_names_unseen, image_size=image_size, batch_size=batch_size, split=False)
         print("Loading checkpoint.")
         classifier.load_state_dict(torch.load("./checkpoints/best.pth"))

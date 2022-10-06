@@ -18,7 +18,7 @@ if __name__ == "__main__":
     classifier = BackBone(number_of_classes)
     classifier.to(device)
     #Load custom dataset
-    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_size, val, test,  batch_size)
+    train_dataloader, val_dataloader, test_dataloader, _ = FlowCamDataLoader(class_names, image_size, val, test,  batch_size)
 
     if not isfile("./checkpoints/best.pth"):
         print("No checkpoint found! Please run training before evaluating model.")

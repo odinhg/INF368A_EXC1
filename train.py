@@ -20,7 +20,7 @@ if __name__ == "__main__":
     summary(classifier, (3, *image_size))
     classifier.to(device)
     #Load custom dataset
-    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_size, val, test,  batch_size)
+    train_dataloader, val_dataloader, test_dataloader, _ = FlowCamDataLoader(class_names, image_size, val, test,  batch_size)
 
     if not isfile("./checkpoints/best.pth"):
         print("Training...")
