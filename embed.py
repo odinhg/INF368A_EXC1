@@ -14,6 +14,7 @@ from backbone import BackBone
 
 def save_embeddings(classifier, class_idx, dataloader, filename):
     embeddings = []
+    classifier.eval()
     with torch.no_grad():
         for data in tqdm(dataloader):
             images, labels = data[0].to(device), data[1].to(device)

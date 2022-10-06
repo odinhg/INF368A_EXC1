@@ -25,7 +25,8 @@ if __name__ == "__main__":
     else:
         print("Loading checkpoint.")
         classifier.load_state_dict(torch.load("./checkpoints/best.pth"))
-        
+        classifier.eval()
+
         correct_pred = {classname: 0 for classname in class_names}
         total_pred = {classname: 0 for classname in class_names}
         

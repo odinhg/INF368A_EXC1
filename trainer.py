@@ -44,6 +44,7 @@ def train_model(classifier, train_dataloader, val_dataloader, loss_function, opt
                 correct = 0
                 total = 0
                 val_losses = []
+                classifier.eval()
                 with torch.no_grad():
                     for data in val_dataloader:
                         images, labels = data[0].to(device), data[1].to(device)
@@ -64,4 +65,5 @@ def train_model(classifier, train_dataloader, val_dataloader, loss_function, opt
                 if earlystop(val_loss):
                     print(f"Early stopped at epoch {epoch}")
                     return train_history
+                classifier.train()
     return train_history
