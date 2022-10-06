@@ -102,7 +102,7 @@ To train the network, execute `train.py`. The best model is saved to `checkpoint
 
 ![Loss and accuracy plot during](training_plot.png)
 
-The classifier takes approximately 1 minute to train on the selected dataset and early stops during epoch 5.
+The classifier takes approximately 1 minute to train on the selected dataset (with early stopping).
 
 ### Accuracies on test data
 To evaluate the classifier on test data, run `evaluate.py`.
@@ -125,17 +125,17 @@ To compute and save embeddings (activations in the second to last layer) as pick
 
 To compute average distances, run `compute_average_distances.py`.
 
-## Average Euclidean distances between classes
+### Average Euclidean distances between classes
 ![Average euclidean distances for test data](average_euclidean_distances_test.png)
 ![Average euclidean distances for unseen classes](average_euclidean_distances_unseen.png)
 
-The above matrices shows the average Euclidean distances between classes for the test data, and the unseen classes, respectively. For embeddings of the *test data*, we see that the average distance between samples from the same class is significantly smaller than the average distance between samples from different classes. Embeddings of the *unseen* classes however, does not seem to have any such separation.
+The above matrices shows the average Euclidean distances between classes for the test data, and the unseen classes, respectively. For embeddings of the *test data*, we see that the average distance between samples from the same class is significantly smaller than the average distance between samples from different classes. There is also some separation between the embeddings of the *unseen* classes although the two last unseen classes seems more difficult to tell apart based on these average distances. 
 
-## Average angular (cosine) distances between classes
+### Average angular (cosine) distances between classes
 ![Average angular distances for test data](average_angular_distances_test.png)
 ![Average angular distances for unseen classes](average_angular_distances_unseen.png)
 
-For the average angular distances, we observe the same thing as above: the classes our classifier has trained on have good separation (maybe even better than in the Euclidean case), whereas unseen classes seems to be all over the place.
+For the average angular distances, we observe the same thing as above: the classes our classifier has trained on have good separation. The last two unseen classes seems to be closer in average angular distance.
 
 ## Task 6 and 7
 To obtain the plots in this task, run `dimensionality_reduction.py`.
