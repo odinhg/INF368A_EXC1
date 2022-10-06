@@ -43,7 +43,6 @@ if __name__ == "__main__":
     print(avg_angular_distances)
     save_distance_figure(avg_angular_distances, class_names, "average_angular_distances_test.png")
     
-
     #Task 5
     df = pd.read_pickle("embeddings_unseen.pkl")
     classes = [df[df["label_idx"] == i].iloc[:,1:] for i in class_idx_unseen]

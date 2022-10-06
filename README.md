@@ -70,24 +70,26 @@ To evaluate the classifier on test data, run *evaluate.py*.
 **Total test accuracy:** 96.14%
 
 ## Task 4 and 5
-To save embeddings into pickled pandas dataframes for later use, run *embed.py*.
+
+### How to compute embeddings
+To compute and save embeddings (activations in the second to last layer) as pickled pandas dataframes, run *embed.py*. Embeddings are saved as  *embeddings_train.pkl*, *embeddings_test.pkl* and *embeddings_unseen.pkl* for train data, test data, and unseen classes, respectively. The first column is label (index), the rest are activations.
+
+To compute average distances, run *compute_average_distances.py*.
 
 ## Average Euclidean distances between classes
 ![Average euclidean distances for test data](average_euclidean_distances_test.png)
 ![Average euclidean distances for unseen classes](average_euclidean_distances_unseen.png)
+
 The above matrices shows the average Euclidean distances between classes for the test data, and the unseen classes, respectively. For embeddings of the *test data*, we see that the average distance between samples from the same class is significantly smaller than the average distance between samples from different classes. Embeddings of the *unseen* classes however, does not seem to have any such separation.
 
 ## Average angular (cosine) distances between classes
 ![Average angular distances for test data](average_angular_distances_test.png)
 ![Average angular distances for unseen classes](average_angular_distances_unseen.png)
-For the average angular distances, we observe the same thing as above: the classes our classifier has trained on have good separation, whereas unseen classes seems to be all over the place.
+
+For the average angular distances, we observe the same thing as above: the classes our classifier has trained on have good separation (maybe even better than in the Euclidean case), whereas unseen classes seems to be all over the place.
 
 
 
 
 
-### Embedding
-- To compute and save embeddings (activations in the second to last layer) as pickled pandas dataframes, run *embed.py*
-- Embeddings are saved in *embeddings_train.pkl*, *embeddings_test.pkl* and *embeddings_unseen.pkl* for train data, test data, and unseen classes, respectively.
-- First column is label (index), the rest are activations.
 
