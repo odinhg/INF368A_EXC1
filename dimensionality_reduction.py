@@ -65,11 +65,15 @@ if __name__ == "__main__":
     # Find samples closest to and furthest away from class center
     dataset = FlowCamDataSet(class_names, image_size)
     df_projections_train = pd.DataFrame(df_projection_train, index=df_train.index, columns=["x", "y"])
+    df_classes = []
+    centers = []
     for i in class_idx:
         class_indices = df_train.loc[df_train["label_idx"] == i].loc[:, ["label_idx", "image_idx"]]
         class_projections = df_projections_train.loc[class_indices.index]
         df_class = pd.concat([class_indices, class_projections], axis=1)
+        df_classes.append(df_class)
         center = df_class.iloc[:,2:].mean()
+        centers.append(center)
         distances = cdist([center], df_class.iloc[:,2:] , metric="euclidean")[0]
         df_class["distance_to_center"] = distances
         df_class = df_class.sort_values(by=["distance_to_center"])
@@ -79,3 +83,14 @@ if __name__ == "__main__":
         furthest_images = torch.cat([dataset[i][0] for i in furthest["image_idx"].tolist()], dim=2)
         image = F.to_pil_image(torch.cat((closest_images, furthest_images), dim=1))
         image.save(f"closest_and_furthest_images_class_{i}.png")
+    
+    df_classes = pd.concat(df_classes, axis=0)
+    for i, center in zip(class_idx, centers):
+        df_other_classes = df_classes.loc[df_classes["label_idx"] != i].iloc[:,:-1]
+        distances = cdist([center], df_other_classes.loc[:,["x", "y"]] , metric="euclidean")[0]
+        df_other_classes["distance_to_center"] = distances
+        closest = df_other_classes.sort_values(by=["distance_to_center"]).iloc[:5, :]
+        closest_images = torch.cat([dataset[i][0] for i in closest["image_idx"].tolist()], dim=2)
+        image = F.to_pil_image(closest_images)
+        image.save(f"other_class_closest_to_class_{i}.png")
+        
