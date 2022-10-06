@@ -39,7 +39,7 @@ The backbone consists of the following:
 - 1x Drop out layer (p=0.2)
 - 1x Fully connected layer
 
-Full specifications can be seen in *backbone.py*. 
+The model returns activation from the second last layer in its forward pass method so that we can easily extract embeddings later. Full specifications can be seen in `backbone.py`. 
 
 ### Training
 - *Loss function:* Cross entropy loss
@@ -47,16 +47,16 @@ Full specifications can be seen in *backbone.py*.
 - *Learning rate:* 0.0014
 - *Batch size:* 64
 
-The data is split into train (75%), validation (5%) and test data (20%) using a custom data loader. The classifier trains for a maximum of 50 epochs, but has early stopping implemented. All images are resized to 200x200 pixels in the dataloader. All the above parameters can be changed in *configfile.py*.
+The data is split into train (75%), validation (5%) and test data (20%) using a custom data loader. The classifier trains for a maximum of 50 epochs, but has early stopping implemented. All images are resized to 200x200 pixels in the dataloader. All the above parameters can be changed in `configfile.py`.
 
-To train the network, execute *train.py*. The best model is saved to *checkpoints/best.pth* and will be used in the following tasks. Furthermore, a plot showing loss and accuracy for both the train and validation data is saved to *training_plot.png*.
+To train the network, execute `train.py`. The best model is saved to `checkpoints/best.pth` and will be used in the following tasks. Furthermore, a plot showing loss and accuracy for both the train and validation data is saved to `training_plot.png`.
 
 ![Loss and accuracy plot during](training_plot.png)
 
 The classifier takes just over 1 minute to train on the selected dataset and early stops during epoch 5.
 
 ### Accuracies on test data
-To evaluate the classifier on test data, run *evaluate.py*.
+To evaluate the classifier on test data, run `evaluate.py`.
 
 **Test accuracy for each class:**
 
@@ -72,9 +72,9 @@ To evaluate the classifier on test data, run *evaluate.py*.
 ## Task 4 and 5
 
 ### How to compute embeddings
-To compute and save embeddings (activations in the second to last layer) as pickled pandas dataframes, run *embed.py*. Embeddings are saved as  *embeddings_train.pkl*, *embeddings_test.pkl* and *embeddings_unseen.pkl* for train data, test data, and unseen classes, respectively. The first column is label (index), the rest are activations.
+To compute and save embeddings (activations in the second to last layer) as pickled pandas dataframes, run `embed.py`. Embeddings are saved as  `embeddings_train.pkl`, `embeddings_test.pkl` and `embeddings_unseen.pkl` for train data, test data, and unseen classes, respectively. The first column is label (index), the rest are activations.
 
-To compute average distances, run *compute_average_distances.py*.
+To compute average distances, run `compute_average_distances.py`.
 
 ## Average Euclidean distances between classes
 ![Average euclidean distances for test data](average_euclidean_distances_test.png)

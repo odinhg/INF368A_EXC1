@@ -12,38 +12,38 @@ class BackBone(nn.Module):
 
         #Use EfficientNet V2 with small weights as base
         pretrained = efficientnet_v2_s(weights=EfficientNet_V2_S_Weights.IMAGENET1K_V1)
-        #Cut off last layers. Input (-1, 3, 300, 300), Output (-1, 1280, 10, 10) 
-        self.feature_extractor = nn.Sequential(*list(pretrained.children())[:-2])
+        #Cut off last layers. Input (-1, 3, 128, 128), Output (-1, 64, 16, 16) 
+        self.feature_extractor = nn.Sequential(*list(list(pretrained.children())[:-2][0].children())[:-4])
         for param in self.feature_extractor.parameters():
                 param.requires_grad = False
-        #Extra conv layers. Output (-1, 640, 5, 5)
+        #Extra conv layers. Output (-1, 64, 8, 8)
         self.extra_layers = nn.Sequential(
                     nn.Conv2d(
-                        in_channels=1280,
-                        out_channels=640,
+                        in_channels=64,
+                        out_channels=64,
                         kernel_size=3,
                         stride=1,
                         padding=1
                         ),
-                    nn.BatchNorm2d(640),
+                    nn.BatchNorm2d(64),
                     nn.ReLU(),
                     nn.Conv2d(
-                        in_channels=640,
-                        out_channels=320,
+                        in_channels=64,
+                        out_channels=64,
                         kernel_size=3,
                         stride=1,
                         padding=1
                         ),
-                    nn.BatchNorm2d(320),
+                    nn.BatchNorm2d(64),
                     nn.ReLU(),
                     nn.MaxPool2d(kernel_size=2, stride=2))
-        #Fully connected layers. Input 8000, Output number of classes
+        #Fully connected layers.
         self.fc1 = nn.Sequential(
-                nn.Linear(2880, 500), #8000 1000
+                nn.Linear(4096, self.number_of_classes * 8), 
                 nn.ReLU(),
                 nn.Dropout(0.2))
         self.fc2 = nn.Sequential(
-                nn.Linear(500, self.number_of_classes))
+                nn.Linear(self.number_of_classes * 8, self.number_of_classes))
 
     def forward(self, x):
         x = self.feature_extractor(x)
