@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from os.path import isfile
 import umap.umap_ as umap
 from sklearn.preprocessing import StandardScaler
-from configfile import class_names_all 
+from configfile import class_names, class_names_unseen
 
 def sample_df(df, n=100):
     if n > df.shape[0]:
@@ -46,14 +46,14 @@ if __name__ == "__main__":
     s = ax[0].scatter(df_projection_test[:,0], df_projection_test[:,1], c=df_test.label_idx, s=5)
     ax[0].set_aspect("equal", "datalim")
     ax[0].set_title("UMAP (embedded test data)")
-    ax[0].legend(handles=s.legend_elements()[0], labels=class_names_all)
+    ax[0].legend(handles=s.legend_elements()[0], labels=class_names)
     s = ax[1].scatter(df_projection_train[:,0], df_projection_train[:,1], c=df_train.label_idx, s=5)
     ax[1].set_aspect("equal", "datalim")
     ax[1].set_title("UMAP (embedded train data)")
-    ax[1].legend(handles=s.legend_elements()[0], labels=class_names_all)
+    ax[1].legend(handles=s.legend_elements()[0], labels=class_names)
     s = ax[2].scatter(df_projection_unseen[:,0], df_projection_unseen[:,1], c=df_unseen.label_idx, s=5)
     ax[2].set_aspect("equal", "datalim")
     ax[2].set_title("UMAP (embedded unseen classes)")
-    ax[2].legend(handles=s.legend_elements()[0], labels=class_names_all)
+    ax[2].legend(handles=s.legend_elements()[0], labels=class_names_unseen)
     fig.tight_layout()
     plt.savefig("umap_embeddings.png")
