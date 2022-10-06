@@ -1,0 +1,129 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/odinhg/Python/INF368A/INF368A_EXC1/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20220828.0/
+Accuracies on test data	README.md	/^### Accuracies on test data$/;"	S	section:INF368A Exercise 1""Task 3
+Architecure / Backbone	README.md	/^### Architecure \/ Backbone$/;"	S	section:INF368A Exercise 1""Task 3
+Average Euclidean distances between classes	README.md	/^## Average Euclidean distances between classes$/;"	s	chapter:INF368A Exercise 1
+Average angular (cosine) distances between classes	README.md	/^## Average angular (cosine) distances between classes$/;"	s	chapter:INF368A Exercise 1
+BackBone	backbone.py	/^class BackBone(nn.Module):$/;"	c
+EarlyStopper	trainer.py	/^class EarlyStopper():$/;"	c
+Embedding	README.md	/^### Embedding$/;"	S	section:INF368A Exercise 1""Average angular (cosine) distances between classes
+FlowCamDataLoader	dataloader.py	/^def FlowCamDataLoader(class_names, image_size = (300, 300), val = 0.1, test = 0.2, batch_size = /;"	f
+FlowCamDataSet	dataloader.py	/^class FlowCamDataSet(Dataset):$/;"	c
+INF368A Exercise 1	README.md	/^# INF368A Exercise 1$/;"	c
+Seen classes	README.md	/^### Seen classes$/;"	S	section:INF368A Exercise 1""Task 1 and 2
+Task 1 and 2	README.md	/^## Task 1 and 2$/;"	s	chapter:INF368A Exercise 1
+Task 3	README.md	/^## Task 3$/;"	s	chapter:INF368A Exercise 1
+Task 4 and 5	README.md	/^## Task 4 and 5$/;"	s	chapter:INF368A Exercise 1
+Training	README.md	/^### Training$/;"	S	section:INF368A Exercise 1""Task 3
+Unseen classes	README.md	/^### Unseen classes$/;"	S	section:INF368A Exercise 1""Task 1 and 2
+_	evaluate.py	/^                _, predictions = torch.max(outputs, 1)$/;"	v
+_	main.py	/^                _, predictions = torch.max(outputs, 1)$/;"	v
+__call__	trainer.py	/^    def __call__(self, validation_loss):$/;"	m	class:EarlyStopper
+__getitem__	dataloader.py	/^    def __getitem__(self, index):$/;"	m	class:FlowCamDataSet
+__init__	backbone.py	/^    def __init__(self, number_of_classes):$/;"	m	class:BackBone
+__init__	dataloader.py	/^    def __init__(self, class_names, image_size = (300, 300)): $/;"	m	class:FlowCamDataSet
+__init__	trainer.py	/^    def __init__(self, limit = 12, min_change = 0):$/;"	m	class:EarlyStopper
+__len__	dataloader.py	/^    def __len__(self):$/;"	m	class:FlowCamDataSet
+accuracy	evaluate.py	/^            accuracy = 100 * correct_count \/ total_pred[classname]$/;"	v
+accuracy	main.py	/^            accuracy = 100 * float(correct_count) \/ total_pred[classname]$/;"	v
+activations_second_last_layer	evaluate.py	/^                outputs, activations_second_last_layer = classifier(images)$/;"	v
+activations_second_last_layer	main.py	/^                outputs, activations_second_last_layer = classifier(images)$/;"	v
+avg_angular_distances	analyse.py	/^    avg_euclidean_distances, avg_angular_distances = compute_average_distances(classes)$/;"	v
+avg_euclidean_distances	analyse.py	/^    avg_euclidean_distances, avg_angular_distances = compute_average_distances(classes)$/;"	v
+batch_size	configfile.py	/^batch_size = 64$/;"	v
+class_idx	configfile.py	/^class_idx = [0, 1, 2, 3, 4, 5]$/;"	v
+class_idx_unseen	configfile.py	/^class_idx_unseen = [6, 7, 8]$/;"	v
+class_names	configfile.py	/^class_names = [class_names_all[i] for i in class_idx]$/;"	v
+class_names_all	configfile.py	/^class_names_all = ["chainthin", "darksphere", "Rhabdonellidae", "Odontella", "Codonellopsis", "N/;"	v
+class_names_unseen	configfile.py	/^class_names_unseen = [class_names_all[i] for i in class_idx_unseen]$/;"	v
+classes	analyse.py	/^    classes = [df[df["label_idx"] == i].iloc[:,1:] for i in class_idx]$/;"	v
+classes	analyse.py	/^    classes = [df[df["label_idx"] == i].iloc[:,1:] for i in class_idx_unseen]$/;"	v
+classifier	embed.py	/^        classifier = BackBone(number_of_classes)$/;"	v
+classifier	evaluate.py	/^    classifier = BackBone(number_of_classes)$/;"	v
+classifier	main.py	/^    classifier = BackBone(number_of_classes)$/;"	v
+classifier	train.py	/^    classifier = BackBone(number_of_classes)$/;"	v
+compute_average_distances	analyse.py	/^def compute_average_distances(classes):$/;"	f
+correct	evaluate.py	/^        correct = 0$/;"	v
+correct_pred	evaluate.py	/^        correct_pred = {classname: 0 for classname in class_names}$/;"	v
+correct_pred	main.py	/^        correct_pred = {classname: 0 for classname in class_names}$/;"	v
+device	configfile.py	/^device = torch.device('cuda:4') $/;"	v
+df	analyse.py	/^    df = pd.read_pickle("embeddings_test.pkl")$/;"	v
+df	analyse.py	/^    df = pd.read_pickle("embeddings_unseen.pkl")$/;"	v
+embeddings	evaluate.py	/^        embeddings = []$/;"	v
+embeddings	main.py	/^        embeddings = []$/;"	v
+embeddings_df	main.py	/^        embeddings_df = pd.DataFrame(data=embeddings)$/;"	v
+epochs	configfile.py	/^epochs = 50 $/;"	v
+forward	backbone.py	/^    def forward(self, x):$/;"	m	class:BackBone
+image_size	configfile.py	/^image_size = (200, 200)$/;"	v
+images	evaluate.py	/^                images, labels = data[0].to(device), data[1].to(device)$/;"	v
+images	main.py	/^                images, labels = data[0].to(device), data[1].to(device)$/;"	v
+labels	evaluate.py	/^                images, labels = data[0].to(device), data[1].to(device)$/;"	v
+labels	main.py	/^                images, labels = data[0].to(device), data[1].to(device)$/;"	v
+loss_function	main.py	/^        loss_function = nn.CrossEntropyLoss()$/;"	v
+loss_function	train.py	/^        loss_function = nn.CrossEntropyLoss()$/;"	v
+lr	configfile.py	/^lr = 0.0014$/;"	v
+nn	backbone.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+nn	embed.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+nn	evaluate.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+nn	main.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+nn	train.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+np	analyse.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	embed.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	evaluate.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	main.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	train.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	trainer.py	/^import numpy as np$/;"	I	nameref:module:numpy
+number_of_classes	evaluate.py	/^    number_of_classes = len(class_names)$/;"	v
+number_of_classes	main.py	/^    number_of_classes = len(class_names)$/;"	v
+number_of_classes	train.py	/^    number_of_classes = len(class_names)$/;"	v
+optim	embed.py	/^import torch.optim as optim$/;"	I	nameref:module:torch.optim
+optim	evaluate.py	/^import torch.optim as optim$/;"	I	nameref:module:torch.optim
+optim	main.py	/^import torch.optim as optim$/;"	I	nameref:module:torch.optim
+optim	train.py	/^import torch.optim as optim$/;"	I	nameref:module:torch.optim
+optimizer	main.py	/^        optimizer = optim.Adam(classifier.parameters(), lr=lr)$/;"	v
+optimizer	train.py	/^        optimizer = optim.Adam(classifier.parameters(), lr=lr)$/;"	v
+outputs	evaluate.py	/^                outputs, activations_second_last_layer = classifier(images)$/;"	v
+outputs	main.py	/^                outputs, activations_second_last_layer = classifier(images)$/;"	v
+pd	analyse.py	/^import pandas as pd$/;"	I	nameref:module:pandas
+pd	embed.py	/^import pandas as pd$/;"	I	nameref:module:pandas
+pd	evaluate.py	/^import pandas as pd$/;"	I	nameref:module:pandas
+pd	main.py	/^import pandas as pd$/;"	I	nameref:module:pandas
+pd	train.py	/^import pandas as pd$/;"	I	nameref:module:pandas
+plt	analyse.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
+plt	utilities.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
+predictions	evaluate.py	/^                _, predictions = torch.max(outputs, 1)$/;"	v
+predictions	main.py	/^                _, predictions = torch.max(outputs, 1)$/;"	v
+save_distance_figure	analyse.py	/^def save_distance_figure(distances, class_names, filename):$/;"	f
+save_embeddings	embed.py	/^def save_embeddings(classifier, class_idx, dataloader, filename):$/;"	f
+save_train_plot	utilities.py	/^def save_train_plot(filename, train_history):$/;"	f
+test	configfile.py	/^test = 0.2 #Use 20% for test data$/;"	v
+test_dataloader	embed.py	/^        train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image/;"	v
+test_dataloader	evaluate.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
+test_dataloader	main.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
+test_dataloader	train.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
+total	evaluate.py	/^        total = 0$/;"	v
+total_accuracy	evaluate.py	/^        total_accuracy = 100 * correct \/ total$/;"	v
+total_pred	evaluate.py	/^        total_pred = {classname: 0 for classname in class_names}$/;"	v
+total_pred	main.py	/^        total_pred = {classname: 0 for classname in class_names}$/;"	v
+train_dataloader	embed.py	/^        train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image/;"	v
+train_dataloader	evaluate.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
+train_dataloader	main.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
+train_dataloader	train.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
+train_history	main.py	/^        train_history = train_model(classifier, train_dataloader, val_dataloader, loss_function,/;"	v
+train_history	train.py	/^        train_history = train_model(classifier, train_dataloader, val_dataloader, loss_function,/;"	v
+train_model	trainer.py	/^def train_model(classifier, train_dataloader, val_dataloader, loss_function, optimizer, epochs, /;"	f
+unseen_dataloader	embed.py	/^        unseen_dataloader = FlowCamDataLoader(class_names_unseen, image_size=image_size, batch_s/;"	v
+val	configfile.py	/^val = 0.05 #Use 5% for validation data $/;"	v
+val_dataloader	embed.py	/^        train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image/;"	v
+val_dataloader	evaluate.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
+val_dataloader	main.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
+val_dataloader	train.py	/^    train_dataloader, val_dataloader, test_dataloader = FlowCamDataLoader(class_names, image_siz/;"	v
