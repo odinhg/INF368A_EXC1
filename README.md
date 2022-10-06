@@ -5,14 +5,14 @@
 ### Seen classes
 The following classes (with around 1-2k images each) where used for the train/validation/test data:
 
-- **chainthin:** 1747 images (21.37%).
-- **darksphere:** 1704 images (20.85%).
-- **Rhabdonellidae:** 1088 images (13.31%).
-- **Odontella:** 1140 images (13.95%).
-- **Codonellopsis:** 1205 images (14.74%).
-- **Neoceratium:** 1290 images (15.78%).
+- **chainthin:** 1747 images (21.37%). 
+- **darksphere:** 1704 images (20.85%). 
+- **Rhabdonellidae:** 1088 images (13.31%). 
+- **Odontella:** 1140 images (13.95%). 
+- **Codonellopsis:** 1205 images (14.74%). 
+- **Neoceratium:** 1290 images (15.78%). 
 
-**Total:** 8174 images.
+**Total:** 8174 images. 
 
 The data is randomly split into the following sets:
 
@@ -32,14 +32,63 @@ The following classes where selected as unseen classes:
 ## Task 3
 ### Architecure / Backbone
 The backbone consists of the following:
-- 1x (frozen) EfficientNet v2 (using small weights)
+- 1x (frozen) EfficientNet v2 (using small weights) with some layers cut off at the end. 
 - 2x Convolutional layers (with 3x3 kernel) with ReLU activation and batch normalization
 - 1x Max pooling layer
 - 1x Fully connected layer with ReLU activation
 - 1x Drop out layer (p=0.2)
 - 1x Fully connected layer
 
-The model returns activation from the second last layer in its forward pass method so that we can easily extract embeddings later. Full specifications can be seen in `backbone.py`. 
+```
+===============================================================================================                                                                                                                                                                 
+Layer (type:depth-idx)                        Output Shape              Param #                                                                                                                                                                                 
+===============================================================================================                                                                                                                                                                 
+├─Sequential: 1-1                             [-1, 64, 16, 16]          --                                                                                                                                                                                      
+|    └─Conv2dNormActivation: 2-1              [-1, 24, 64, 64]          --                                                                                                                                                                                      
+|    |    └─Conv2d: 3-1                       [-1, 24, 64, 64]          (648)                                                                                                                                                                                   
+|    |    └─BatchNorm2d: 3-2                  [-1, 24, 64, 64]          (48)                                                                                                                                                                                    
+|    |    └─SiLU: 3-3                         [-1, 24, 64, 64]          --                                                                                                                                                                                      
+|    └─Sequential: 2-2                        [-1, 24, 64, 64]          --                                                                                                                                                                                      
+|    |    └─FusedMBConv: 3-4                  [-1, 24, 64, 64]          (5,232)                                                                                                                                                                                 
+|    |    └─FusedMBConv: 3-5                  [-1, 24, 64, 64]          (5,232)                                                                                                                                                                                 
+|    └─Sequential: 2-3                        [-1, 48, 32, 32]          --                                                                                                                                                                                      
+|    |    └─FusedMBConv: 3-6                  [-1, 48, 32, 32]          (25,632)                                                                                                                                                                                
+|    |    └─FusedMBConv: 3-7                  [-1, 48, 32, 32]          (92,640)                                                                                                                                                                                
+|    |    └─FusedMBConv: 3-8                  [-1, 48, 32, 32]          (92,640)                                                                                                                                                                                
+|    |    └─FusedMBConv: 3-9                  [-1, 48, 32, 32]          (92,640)                                                                                                                                                                                
+|    └─Sequential: 2-4                        [-1, 64, 16, 16]          --                                                                                                                                                                                      
+|    |    └─FusedMBConv: 3-10                 [-1, 64, 16, 16]          (95,744)                                                                                                                                                                                
+|    |    └─FusedMBConv: 3-11                 [-1, 64, 16, 16]          (164,480)                                                                                                                                                                               
+|    |    └─FusedMBConv: 3-12                 [-1, 64, 16, 16]          (164,480)                                                                                                                                                                               
+|    |    └─FusedMBConv: 3-13                 [-1, 64, 16, 16]          (164,480)                                                                                                                                                                               
+├─Sequential: 1-2                             [-1, 64, 8, 8]            --                                                                                                                                                                                      
+|    └─Conv2d: 2-5                            [-1, 64, 16, 16]          36,928                                                                                                                                                                                  
+|    └─BatchNorm2d: 2-6                       [-1, 64, 16, 16]          128                                                                                                                                                                                     
+|    └─ReLU: 2-7                              [-1, 64, 16, 16]          --                                                                                                                                                                                      
+|    └─Conv2d: 2-8                            [-1, 64, 16, 16]          36,928                                                                                                                                                                                  
+|    └─BatchNorm2d: 2-9                       [-1, 64, 16, 16]          128                                                                                                                                                                                     
+|    └─ReLU: 2-10                             [-1, 64, 16, 16]          --                                                                                                                                                                                      
+|    └─MaxPool2d: 2-11                        [-1, 64, 8, 8]            --                                                                                                                                                                                      
+├─Sequential: 1-3                             [-1, 128]                 --                                                                                                                                                                                      
+|    └─Linear: 2-12                           [-1, 128]                 524,416                                                                                                                                                                                 
+|    └─ReLU: 2-13                             [-1, 128]                 --                                                                                                                                                                                      
+|    └─Dropout: 2-14                          [-1, 128]                 --                                                                                                                                                                                      
+├─Sequential: 1-4                             [-1, 6]                   --                                                                                                                                                                                      
+|    └─Linear: 2-15                           [-1, 6]                   774                                                                                                                                                                                     
+===============================================================================================                                                                                                                                                                 
+Total params: 1,503,198                                                                                                                                                                                                                                         
+Trainable params: 599,302                                                                                                                                                                                                                                       
+Non-trainable params: 903,896                                                                                                                                                                                                                                   
+Total mult-adds (M): 26.26        
+===============================================================================================
+Input size (MB): 0.19               
+Forward/backward pass size (MB): 2.00
+Params size (MB): 5.73     
+Estimated Total Size (MB): 7.92
+===============================================================================================
+```
+
+The model returns activation from the second last layer in its forward pass method so that we can easily extract embeddings later. The model is implemented in `backbone.py`. 
 
 ### Training
 - *Loss function:* Cross entropy loss
@@ -47,27 +96,27 @@ The model returns activation from the second last layer in its forward pass meth
 - *Learning rate:* 0.0014
 - *Batch size:* 64
 
-The data is split into train (75%), validation (5%) and test data (20%) using a custom data loader. The classifier trains for a maximum of 50 epochs, but has early stopping implemented. All images are resized to 200x200 pixels in the dataloader. All the above parameters can be changed in `configfile.py`.
+The data is split into train (75%), validation (5%) and test data (20%) using a custom data loader. The classifier trains for a maximum of 50 epochs, but has early stopping implemented. All images are resized to 128x128 pixels in the dataloader. All the above parameters can be changed in `configfile.py`.
 
 To train the network, execute `train.py`. The best model is saved to `checkpoints/best.pth` and will be used in the following tasks. Furthermore, a plot showing loss and accuracy for both the train and validation data is saved to `training_plot.png`.
 
 ![Loss and accuracy plot during](training_plot.png)
 
-The classifier takes just over 1 minute to train on the selected dataset and early stops during epoch 5.
+The classifier takes approximately 1 minute to train on the selected dataset and early stops during epoch 5.
 
 ### Accuracies on test data
 To evaluate the classifier on test data, run `evaluate.py`.
 
 **Test accuracy for each class:**
 
-- **chainthin:** 97.92%
-- **darksphere:** 98.82%
-- **Rhabdonellidae:** 90.18%
-- **Odontella:** 94.40%
-- **Codonellopsis:** 97.12%
-- **Neoceratium:** 96.30%
+- **chainthin** 98.51% 
+- **darksphere** 99.41% 
+- **Rhabdonellidae** 96.88% 
+- **Odontella** 98.00% 
+- **Codonellopsis** 98.77% 
+- **Neoceratium** 94.24% 
 
-**Total test accuracy:** 96.14%
+**Total test accuracy:** 97.80%
 
 ## Task 4 and 5
 
