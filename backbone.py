@@ -39,11 +39,11 @@ class BackBone(nn.Module):
                     nn.MaxPool2d(kernel_size=2, stride=2))
         #Fully connected layers.
         self.fc1 = nn.Sequential(
-                nn.Linear(4096, self.number_of_classes * 8), 
+                nn.Linear(4096, 64), 
                 nn.ReLU(),
                 nn.Dropout(0.2))
         self.fc2 = nn.Sequential(
-                nn.Linear(self.number_of_classes * 8, self.number_of_classes))
+                nn.Linear(64, self.number_of_classes))
 
     def forward(self, x):
         x = self.feature_extractor(x)

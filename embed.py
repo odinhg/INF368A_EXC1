@@ -41,7 +41,3 @@ if __name__ == "__main__":
         save_embeddings(classifier, class_idx, train_dataloader, "embeddings_train.pkl")
         save_embeddings(classifier, class_idx, test_dataloader, "embeddings_test.pkl")
         save_embeddings(classifier, class_idx_unseen, unseen_dataloader, "embeddings_unseen.pkl")
-#TODO
-# - Create analyse.py which loads the embeddings, compute average distances (both angular and euclidean) between classes and within classes, also do dimensionality reduction and visualize
-# - retrieve_examples.py: for each class show closest and furthest in-class objects and closest objects from other classes
-# - transfer_learning.py: load the unseen classes into train, validation and test set, train a classifier after the embedding (linear, SVM and/or kNN classifier)
