@@ -67,6 +67,8 @@ if __name__ == "__main__":
     df_projections_train = pd.DataFrame(df_projection_train, index=df_train.index, columns=["x", "y"])
     df_classes = []
     centers = []
+    in_class_images = []
+    other_class_images = []
     for i in class_idx:
         class_indices = df_train.loc[df_train["label_idx"] == i].loc[:, ["label_idx", "image_idx"]]
         class_projections = df_projections_train.loc[class_indices.index]
@@ -81,8 +83,10 @@ if __name__ == "__main__":
         furthest = df_class.iloc[-5:, :]
         closest_images = torch.cat([dataset[i][0] for i in closest["image_idx"].tolist()], dim=2)
         furthest_images = torch.cat([dataset[i][0] for i in furthest["image_idx"].tolist()], dim=2)
-        image = F.to_pil_image(torch.cat((closest_images, furthest_images), dim=1))
-        image.save(f"closest_and_furthest_images_class_{i}.png")
+        in_class_images.append(torch.cat((closest_images, furthest_images), dim=1))
+        
+        #image = F.to_pil_image(torch.cat((closest_images, furthest_images), dim=1))
+        #image.save(f"closest_and_furthest_images_class_{i}.png")
     
     df_classes = pd.concat(df_classes, axis=0)
     for i, center in zip(class_idx, centers):
@@ -91,6 +95,13 @@ if __name__ == "__main__":
         df_other_classes["distance_to_center"] = distances
         closest = df_other_classes.sort_values(by=["distance_to_center"]).iloc[:5, :]
         closest_images = torch.cat([dataset[i][0] for i in closest["image_idx"].tolist()], dim=2)
-        image = F.to_pil_image(closest_images)
-        image.save(f"other_class_closest_to_class_{i}.png")
+        other_class_images.append(closest_images)
+        #image = F.to_pil_image(closest_images)
+        #image.save(f"other_class_closest_to_class_{i}.png")
+
+    for i in range(len(in_class_images)):
+        image = torch.cat([in_class_images[i], other_class_images[i]], dim=1)
+        image = F.to_pil_image(image)
+        image.save(f"close_faraway_closeotherclass_class_{i}.png")
+
         
