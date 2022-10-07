@@ -48,7 +48,7 @@ if __name__ == "__main__":
     linear_accuracies = []
     knn_accuracies = []
 
-    sample_range = chain(range(10, 100, 10), range(100, 1000, 100), range(1000, len(train_embeddings), 200))
+    sample_range = chain(range(30, 100, 10), range(100, 1000, 100), range(1000, len(train_embeddings), 200))
     for n in tqdm(list(sample_range)):
         # Fit models
         X_train = train_embeddings.iloc[:n, 2:]
