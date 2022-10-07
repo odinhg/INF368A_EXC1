@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from itertools import chain
 from os.path import isfile, join
 from tqdm import tqdm
 from configfile import *
@@ -43,7 +44,8 @@ if __name__ == "__main__":
     svc_accuracies = []
     linear_accuracies = []
     knn_accuracies = []
-    for n in tqdm(range(10, len(train), 50)):
+    sample_range = chain(range(10, 100, 10), range(100, 1000, 50), range(1000, len(train), 100))
+    for n in tqdm(list(sample_range)):
         X_train = train.iloc[:n, 2:]
         y_train = train.loc[:, "label_idx"].iloc[:n]
         # Fit models
