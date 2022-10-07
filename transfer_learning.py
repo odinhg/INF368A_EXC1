@@ -24,6 +24,7 @@ def save_accuracy_plot(accuracies, n_samples, method):
     plt.ylabel("Test accuracy")
     plt.xticks(xi, n_samples, rotation=90)
     plt.title(method)
+    plt.grid()
     plt.tight_layout()
     filename = "accuracy_" + method + ".png"
     plt.savefig(filename)
