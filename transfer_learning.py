@@ -36,7 +36,7 @@ if __name__ == "__main__":
     
     # Load saved embeddings of the data with unseen classes and split
     df = pd.read_pickle("embeddings_unseen.pkl")
-    train_embeddings, test_embeddings = train_test_split(df, test_size=0.2, shuffle=True, random_state=0)
+    train_embeddings, test_embeddings = train_test_split(df, test_size=0.35, shuffle=True, random_state=0)
 
     svm_classifier = make_pipeline(StandardScaler(), SVC(gamma="auto"))
     linear_classifier = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, tol=1e-3))
