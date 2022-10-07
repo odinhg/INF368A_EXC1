@@ -2,6 +2,7 @@
 **Odin Hoff Gardå**
 
 ## Quick Start
+To generate everything from scratch, run the following python files in the order they are listed.
 
 1. `train.py`
 	- Train classifier.
@@ -12,7 +13,7 @@
 	- Extracts activations in the second to last layer (embeddings).
 	- Does this for the test data, train data and the dataset with unseen classes.
 	- Saves embeddings to pickled dataframes.
-4. `compute_average_distances`
+4. `compute_average_distances.py`
 	- Computes average (Euclidean and angular) distances between classes.
 	- Does this for classes the classifier is trained on and the dataset with unseen classes.
 	- Prints distance matrices and also saves them as images.
