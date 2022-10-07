@@ -1,5 +1,6 @@
 # INF368A Exercise 1
 **Odin Hoff Gardå**
+![Plankton](plankton.png)
 
 ## Quick Start
 To generate everything from scratch, run the following python files in the order they are listed.
