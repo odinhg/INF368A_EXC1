@@ -22,7 +22,7 @@ def save_accuracy_plot(accuracies, n_samples, method):
     plt.plot(xi, accuracies, marker="o", linestyle="--", color="b")
     plt.xlabel("Number of samples trained on")
     plt.ylabel("Test accuracy")
-    plt.xticks(xi, n_samples)
+    plt.xticks(xi, n_samples, rotation=90)
     plt.title(method)
     #plt.legend()
     plt.savefig("accuracy_" + method + ".png")
