@@ -156,3 +156,16 @@ We compute the center for each class and show the 5 closest images and the 5 fur
 ![Closest and furthest away samples in class 3](close_faraway_closeotherclass_class_3.png)
 ![Closest and furthest away samples in class 4](close_faraway_closeotherclass_class_4.png)
 ![Closest and furthest away samples in class 5](close_faraway_closeotherclass_class_5.png)
+
+## Task 8
+To generate accuracy plots for this task, run `transfer_learning.py`. We load the previously computed embeddings of the unseen classes from `embeddings_unseen.pkl` and split this into training and test data. Using more and more of the training data, we fit three classifiers:
+
+- Support Vector Classifier
+- Linear Classifier
+- kNN Classifier (with k=10)
+
+The following plots show the test accuracy for each classifier with respect to the size of training data used.
+
+![Test accuracy SVC](accuracy_SVC.png)
+![Test accuracy Linear Classifier](accuracy_Linear.png)
+![Test accuracy kNN](accuracy_kNN.png)
