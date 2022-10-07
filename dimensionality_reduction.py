@@ -8,7 +8,7 @@ from configfile import *
 from scipy.spatial.distance import cdist
 from dataloader import FlowCamDataSet
 import torchvision.transforms.functional as F
-from PIL import Image
+from PIL import Image, ImageDraw
 
 def sample_df(df, n=100):
     if n > df.shape[0]:
@@ -62,6 +62,7 @@ if __name__ == "__main__":
     fig.tight_layout()
     plt.savefig("umap_embeddings.png")
     
+    # The following code is a bit messy, and will probably never get cleaned up. So sorry about that.
     # Find samples closest to and furthest away from class center
     dataset = FlowCamDataSet(class_names, image_size)
     df_projections_train = pd.DataFrame(df_projection_train, index=df_train.index, columns=["x", "y"])
@@ -84,10 +85,7 @@ if __name__ == "__main__":
         closest_images = torch.cat([dataset[i][0] for i in closest["image_idx"].tolist()], dim=2)
         furthest_images = torch.cat([dataset[i][0] for i in furthest["image_idx"].tolist()], dim=2)
         in_class_images.append(torch.cat((closest_images, furthest_images), dim=1))
-        
-        #image = F.to_pil_image(torch.cat((closest_images, furthest_images), dim=1))
-        #image.save(f"closest_and_furthest_images_class_{i}.png")
-    
+    # Find images from other classes that are closest to this class
     df_classes = pd.concat(df_classes, axis=0)
     for i, center in zip(class_idx, centers):
         df_other_classes = df_classes.loc[df_classes["label_idx"] != i].iloc[:,:-1]
@@ -96,11 +94,13 @@ if __name__ == "__main__":
         closest = df_other_classes.sort_values(by=["distance_to_center"]).iloc[:5, :]
         closest_images = torch.cat([dataset[i][0] for i in closest["image_idx"].tolist()], dim=2)
         other_class_images.append(closest_images)
-        #image = F.to_pil_image(closest_images)
-        #image.save(f"other_class_closest_to_class_{i}.png")
-
+    # Save images
     for i in range(len(in_class_images)):
-        image = torch.cat([in_class_images[i], other_class_images[i]], dim=1)
+        header_text = Image.new('RGB', (in_class_images[i].shape[2], 20), color=(255, 255, 255))
+        draw = ImageDraw.Draw(header_text)
+        draw.text((10, 10), "TEST TEST TEST", fill=(0, 0, 0))
+        header_text = F.pil_to_tensor(header_text) 
+        image = torch.cat([header_text, in_class_images[i], other_class_images[i]], dim=1)
         image = F.to_pil_image(image)
         image.save(f"close_faraway_closeotherclass_class_{i}.png")
 
