@@ -36,7 +36,7 @@ if __name__ == "__main__":
     
     # Load saved embeddings of the data with unseen classes and split
     df = pd.read_pickle("embeddings_unseen.pkl")
-    #train_embeddings, test_embeddings = train_test_split(df, test_size=0.3, shuffle=True, random_state=0)
+    train_embeddings, test_embeddings = train_test_split(df, test_size=0.2, shuffle=True, random_state=0)
 
     svm_classifier = make_pipeline(StandardScaler(), SVC(gamma="auto"))
     linear_classifier = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, tol=1e-3))
@@ -48,12 +48,12 @@ if __name__ == "__main__":
     linear_accuracies = []
     knn_accuracies = []
 
-    #sample_range = chain(range(30, 100, 10), range(100, 1000, 100), range(1000, len(train_embeddings), 200))
-    for ratio in tqdm([x/20 for x in range(1,20)]):
+    sample_range = chain(range(30, 100, 10), range(100, 1000, 100), range(1000, len(train_embeddings), 200))
+    #for ratio in tqdm([x/20 for x in range(1,20)]):
+    for n in tqdm(list(sample_range)):
         # Fit models
-        train_embeddings, test_embeddings = train_test_split(df, test_size=1-ratio, shuffle=True, random_state=0)
-        X_train = train_embeddings.iloc[:, 2:]
-        y_train = train_embeddings.loc[:, "label_idx"]
+        X_train = train_embeddings.iloc[:n, 2:]
+        y_train = train_embeddings.loc[:, "label_idx"].iloc[:n]
         svm_classifier.fit(X_train, y_train)
         linear_classifier.fit(X_train, y_train)
         knn_classifier.fit(X_train, y_train)
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         svc_accuracies.append(svc_accuracy)
         linear_accuracies.append(linear_accuracy)
         knn_accuracies.append(knn_accuracy)
-        n_samples.append(ratio)
+        n_samples.append(n)
 
     save_accuracy_plot(svc_accuracies, n_samples, "SVC")
     save_accuracy_plot(linear_accuracies, n_samples, "Linear")
