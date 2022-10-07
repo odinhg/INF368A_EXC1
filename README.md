@@ -1,6 +1,29 @@
 # INF368A Exercise 1
 **Odin Hoff Gardå**
 
+## Quick Start
+
+1. `train.py`
+	- Train classifier.
+	- Saves a plot showing loss and accuracy during training.
+2. `evaluate.py`
+	- Evaluate on test data, get per class and total accuracies.
+3. `embed.py`
+	- Extracts activations in the second to last layer (embeddings).
+	- Does this for the test data, train data and the dataset with unseen classes.
+	- Saves embeddings to pickled dataframes.
+4. `compute_average_distances`
+	- Computes average (Euclidean and angular) distances between classes.
+	- Does this for classes the classifier is trained on and the dataset with unseen classes.
+	- Prints distance matrices and also saves them as images.
+5. `dimensionality_reduction.py`
+	- Uses UMAP to reduce dimension to 2.
+	- Saves plot showing the test data, train data and unseen data projected to 2 dimensions.
+	- Finds samples closest to and furthest away from class center together with the closest samples from other classes and saves top 5 of these samples as images.
+6. `transfer_learning.py`
+	- Use embeddings to train an SVC, linear classifier and a kNN classifier and evaluates these.
+	- Saves plot showing test accuracy as a function of how much of the training data where used.
+
 ## Task 1 and 2
 ### Seen classes
 The following classes (with around 1-2k images each) where used for the train/validation/test data:
