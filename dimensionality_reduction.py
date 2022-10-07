@@ -8,7 +8,7 @@ from configfile import *
 from scipy.spatial.distance import cdist
 from dataloader import FlowCamDataSet
 import torchvision.transforms.functional as F
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 def sample_df(df, n=100):
     if n > df.shape[0]:
@@ -98,7 +98,8 @@ if __name__ == "__main__":
     for i in range(len(in_class_images)):
         header_text = Image.new('RGB', (in_class_images[i].shape[2], 40), color=(255, 255, 255))
         draw = ImageDraw.Draw(header_text)
-        draw.text((10, 10), "TEST TEST TEST", fill=(255, 255, 0))
+        font = ImageFont.load_default()
+        draw.text((in_class_images[i].shape[2]//2, 10), "TEST TEST TEST", fill=(255, 255, 0), font=font)
         header_text = F.pil_to_tensor(header_text) 
         image = torch.cat([header_text, in_class_images[i], other_class_images[i]], dim=1)
         image = F.to_pil_image(image)
