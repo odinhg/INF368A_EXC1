@@ -39,7 +39,7 @@ if __name__ == "__main__":
     train_embeddings, test_embeddings = train_test_split(df, test_size=0.35, shuffle=True, random_state=0)
 
     svm_classifier = make_pipeline(StandardScaler(), SVC(gamma="auto"))
-    linear_classifier = make_pipeline(StandardScaler(), SGDClassifier(max_iter=1000, tol=1e-3))
+    linear_classifier = make_pipeline(StandardScaler(), SGDClassifier(loss="hinge"))
     k = 10
     knn_classifier = KNeighborsClassifier(n_neighbors=k)
 
