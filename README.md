@@ -182,7 +182,7 @@ We compute the center for each class and show the 5 closest images and the 5 fur
 ![Closest and furthest away samples in class 5](close_faraway_closeotherclass_class_5.png)
 
 ## Task 8
-To generate accuracy plots for this task, run `transfer_learning.py`. We load the previously computed embeddings of the unseen classes from `embeddings_unseen.pkl` and split this into training (70%) and test (30%) data. Using more and more of the training data, we fit three classifiers and evaluate them on the test data:
+To generate accuracy plots for this task, run `transfer_learning.py`. We load the previously computed embeddings of the unseen classes from `embeddings_unseen.pkl` and split this into training (65%) and test (35%) data. Using more and more of the training data, we fit three classifiers and evaluate them on the test data:
 
 - Support Vector Classifier
 - Linear Classifier
