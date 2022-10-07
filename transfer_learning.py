@@ -25,6 +25,7 @@ def save_accuracy_plot(accuracies, n_samples, method):
     plt.xticks(xi, n_samples, rotation=90)
     plt.title(method)
     #plt.legend()
+    plt.tight_layout()
     plt.savefig("accuracy_" + method + ".png")
 
 if __name__ == "__main__":
@@ -44,7 +45,7 @@ if __name__ == "__main__":
     svc_accuracies = []
     linear_accuracies = []
     knn_accuracies = []
-    sample_range = chain(range(10, 100, 10), range(100, 1000, 50), range(1000, len(train), 100))
+    sample_range = chain(range(10, 100, 10), range(100, 1000, 100), range(1000, len(train), 200))
     for n in tqdm(list(sample_range)):
         X_train = train.iloc[:n, 2:]
         y_train = train.loc[:, "label_idx"].iloc[:n]
