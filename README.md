@@ -1,5 +1,6 @@
 # INF368A Exercise 1
 **Odin Hoff Gardå**
+
 ![Plankton](plankton.png)
 
 ## Quick Start
