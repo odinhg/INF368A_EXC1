@@ -8,7 +8,7 @@ from configfile import *
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import balanced_accuracy_score
 from sklearn.svm import SVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -66,9 +66,9 @@ if __name__ == "__main__":
         knn_preds = knn_classifier.predict(X_test)
 
         # Compute accuracies
-        svc_accuracy = accuracy_score(y_test, svc_preds)
-        linear_accuracy = accuracy_score(y_test, linear_preds)
-        knn_accuracy = accuracy_score(y_test, knn_preds)
+        svc_accuracy = balanced_accuracy_score(y_test, svc_preds)
+        linear_accuracy = balanced_accuracy_score(y_test, linear_preds)
+        knn_accuracy = balanced_accuracy_score(y_test, knn_preds)
 
         svc_accuracies.append(svc_accuracy)
         linear_accuracies.append(linear_accuracy)
