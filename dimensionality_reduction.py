@@ -96,7 +96,7 @@ if __name__ == "__main__":
         other_class_images.append(closest_images)
     # Save images
     for i in range(len(in_class_images)):
-        header_text = Image.new('RGB', (in_class_images[i].shape[2], 20), color=(255, 255, 255))
+        header_text = Image.new('RGB', (in_class_images[i].shape[2], 40), color=(255, 255, 255))
         draw = ImageDraw.Draw(header_text)
         draw.text((10, 10), "TEST TEST TEST", fill=(0, 0, 0))
         header_text = F.pil_to_tensor(header_text) 
