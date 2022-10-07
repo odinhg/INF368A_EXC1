@@ -96,12 +96,12 @@ if __name__ == "__main__":
         other_class_images.append(closest_images)
     # Save images
     for i in range(len(in_class_images)):
-        header_text = Image.new('RGB', (in_class_images[i].shape[2], 40), color=(255, 255, 255))
+        header_text = Image.new('RGB', (in_class_images[i].shape[2], 20), color=(255, 255, 255))
         draw = ImageDraw.Draw(header_text)
         font = ImageFont.load_default()
-        draw.text((in_class_images[i].shape[2]//2, 10), "TEST TEST TEST", fill=(255, 255, 0))
+        draw.text((10, 5), "TEST TEST TEST", fill=(0, 0, 0))
         header_text.save("PILTEST.png")
-        header_text = F.pil_to_tensor(header_text) 
+        header_text = F.to_tensor(header_text) 
         image = torch.cat([header_text, in_class_images[i], other_class_images[i]], dim=1)
         image = F.to_pil_image(image)
         image.save(f"close_faraway_closeotherclass_class_{i}.png")
