@@ -98,7 +98,7 @@ if __name__ == "__main__":
     for i in range(len(in_class_images)):
         header_text = Image.new('RGB', (in_class_images[i].shape[2], 40), color=(255, 255, 255))
         draw = ImageDraw.Draw(header_text)
-        draw.text((10, 10), "TEST TEST TEST", fill=(0, 0, 0))
+        draw.text((10, 10), "TEST TEST TEST", fill=(255, 255, 0))
         header_text = F.pil_to_tensor(header_text) 
         image = torch.cat([header_text, in_class_images[i], other_class_images[i]], dim=1)
         image = F.to_pil_image(image)
