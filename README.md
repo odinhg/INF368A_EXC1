@@ -148,7 +148,7 @@ First, we randomly sample some of the images (~2000) from each of the datasets (
 We see that the classes the classifier is trained on are well-separated even in 2 dimensions after applying UMAP. This holds true for both the test data and the training data. There seems to be some slight confusion in the test data between *Codonellopsis* and a few other classes. For the unseen classes, we observe some separation, but also some overlap. Especially the third unseen class *Chaetoceros*, overlap with both other unseen classes.
 
 ### Close and far-away samples
-We compute the center for each class and show the 5 closest images and the 5 furthest away images with respect to the Euclidean distance to their class center. We also find the 5 closest images from other classes. The first and second row are the closest and furthest away images, respectively. The bottom row are the closest images from other classes. In this task we use samples from the training data.
+We compute the center for each class and show the 5 closest images and the 5 furthest away images with respect to the Euclidean distance to their class center. We also find the 5 closest images from other classes. The *first* and *second row* shows the closest and furthest away images within the class, respectively. The *bottom row* shows the closest images from other classes. In this task we use samples from the training data.
 
 ![Closest and furthest away samples in class 0](close_faraway_closeotherclass_class_0.png)
 ![Closest and furthest away samples in class 1](close_faraway_closeotherclass_class_1.png)
