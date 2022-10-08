@@ -25,6 +25,6 @@ if __name__ == "__main__":
     classifier.load_state_dict(torch.load("./checkpoints/best.pth"))
     
     print("Embedding data.")
-        save_embeddings(classifier, class_idx, train_dataloader, "embeddings_train.pkl")
-        save_embeddings(classifier, class_idx, test_dataloader, "embeddings_test.pkl")
-        save_embeddings(classifier, class_idx_unseen, unseen_dataloader, "embeddings_unseen.pkl")
+    save_embeddings(classifier, class_idx, train_dataloader, "embeddings_train.pkl")
+    save_embeddings(classifier, class_idx, test_dataloader, "embeddings_test.pkl")
+    save_embeddings(classifier, class_idx_unseen, unseen_dataloader, "embeddings_unseen.pkl")

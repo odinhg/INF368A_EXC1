@@ -5,6 +5,7 @@ from os.path import isfile, join
 from tqdm import tqdm
 from scipy.spatial.distance import cdist
 import matplotlib.pyplot as plt
+from configfile import *
 
 def save_train_plot(filename, train_history):
     # Plot losses and accuracies from training
