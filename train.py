@@ -27,6 +27,6 @@ if __name__ == "__main__":
         loss_function = nn.CrossEntropyLoss()
         optimizer = optim.Adam(classifier.parameters(), lr=lr)
         train_history = train_model(classifier, train_dataloader, val_dataloader, loss_function, optimizer, epochs, device)
-        save_train_plot("training_plot.png", train_history)
+        save_train_plot(join("figs", "training_plot.png"), train_history)
     else:
         print("Chechpoint found! Please delete checkpoint and run training again.")

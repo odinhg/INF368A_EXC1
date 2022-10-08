@@ -1,23 +1,7 @@
 import torch
 from tqdm import tqdm
 import numpy as np
-
-class EarlyStopper():
-    def __init__(self, limit = 12, min_change = 0):
-        self.limit = limit
-        self.min_change = min_change
-        self.min_loss = np.inf
-        self.counter = 0
-
-    def __call__(self, validation_loss):
-        if validation_loss < self.min_loss:
-            self.min_loss = validation_loss
-            self.counter = 0
-        elif validation_loss > self.min_loss + self.min_change:
-            self.counter += 1
-            if self.counter >= self.limit:
-                return True
-        return False
+from utilities import EarlyStopper
 
 def train_model(classifier, train_dataloader, val_dataloader, loss_function, optimizer, epochs, device):
     train_history = {"train_loss":[], "train_accuracy":[], "val_loss":[], "val_accuracy":[]}

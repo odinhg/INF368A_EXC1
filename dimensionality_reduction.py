@@ -1,19 +1,15 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from os.path import isfile
+from os.path import isfile, join
 import umap.umap_ as umap
 from sklearn.preprocessing import StandardScaler
-from configfile import * 
 from scipy.spatial.distance import cdist
-from dataloader import FlowCamDataSet
 import torchvision.transforms.functional as F
 from PIL import Image, ImageDraw, ImageFont
-
-def sample_df(df, n=100):
-    if n > df.shape[0]:
-        n = df.shape[0]
-    return df.sample(n, random_state=420)
+from configfile import * 
+from dataloader import FlowCamDataSet
+from utilities import sample_df
 
 if __name__ == "__main__":
     if not (isfile("embeddings_train.pkl") and isfile("embeddings_test.pkl") and isfile("embeddings_test.pkl")):
@@ -60,7 +56,7 @@ if __name__ == "__main__":
     ax[2].set_title("UMAP (embedded unseen classes)")
     ax[2].legend(handles=s.legend_elements()[0], labels=class_names_unseen)
     fig.tight_layout()
-    plt.savefig("umap_embeddings.png")
+    plt.savefig(join("figs", "umap_embeddings.png"))
     
     # The following code is a bit messy, and will probably never get cleaned up. So sorry about that.
     # Find samples closest to and furthest away from class center

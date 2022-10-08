@@ -7,23 +7,10 @@ from os import listdir
 from os.path import isfile, join
 from tqdm import tqdm
 from configfile import *
-from utilities import save_train_plot
+from utilities import save_embeddings
 from dataloader import FlowCamDataLoader
 from trainer import train_model
 from backbone import BackBone
-
-def save_embeddings(classifier, class_idx, dataloader, filename):
-    embeddings = []
-    classifier.eval()
-    with torch.no_grad():
-        for data in tqdm(dataloader):
-            images, labels, indicies = data[0].to(device), data[1].to(device), data[2].to(device)
-            _, activations_second_last_layer = classifier(images) #We don't care about predictions, just embeddings
-            embeddings += [[int(class_idx[label]), int(index)]  + activation for activation, label, index in zip(activations_second_last_layer.cpu().detach().tolist(), labels.cpu().detach().tolist(), indicies.cpu().detach().tolist())]
-    df = pd.DataFrame(data=embeddings)
-    df.columns = ["label_idx", "image_idx"] + [f"X{i}" for i in range(1, df.shape[1] - 1)]
-    df.to_pickle(filename)
-    print(f"Dataframe ({df.shape[0]} x {df.shape[1]}) saved to {filename}")
 
 if __name__ == "__main__":
     if not isfile("./checkpoints/best.pth"):

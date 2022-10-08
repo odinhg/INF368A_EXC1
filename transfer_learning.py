@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from itertools import chain
 from os.path import isfile, join
 from tqdm import tqdm
-from configfile import *
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
@@ -12,27 +11,12 @@ from sklearn.metrics import balanced_accuracy_score
 from sklearn.svm import SVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.neighbors import KNeighborsClassifier
-
-def save_accuracy_plot(accuracies, n_samples, method):
-    plt.cla()
-    y_min = np.min(accuracies) - 0.1
-    y_max = np.max(accuracies) + 0.1
-    xi = list(range(len(n_samples)))
-    plt.ylim(y_min, y_max)
-    plt.plot(xi, accuracies, marker="o", linestyle="--", color="b")
-    plt.xlabel("Number of samples trained on")
-    plt.ylabel("Test accuracy")
-    plt.xticks(xi, n_samples, rotation=90)
-    plt.title(method)
-    plt.grid()
-    plt.tight_layout()
-    filename = "accuracy_" + method + ".png"
-    plt.savefig(filename)
-    print(f"Saved plot to {filename}.")
+from configfile import *
+from utilities import save_accuracy_plot
 
 if __name__ == "__main__":
     if not isfile("./embeddings_unseen.pkl"):
-        exit("Embeddings for unseen classes not found. Please run embed.py first!")
+        exit("Embeddings not found. Please run embed.py first!")
     
     # Load saved embeddings of the data with unseen classes and split
     df = pd.read_pickle("embeddings_unseen.pkl")

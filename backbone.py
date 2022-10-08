@@ -4,7 +4,6 @@ from torchsummary import summary
 from torchvision.models import efficientnet_v2_s
 from torchvision.models import EfficientNet_V2_S_Weights
 
-
 class BackBone(nn.Module):
     def __init__(self, number_of_classes):
         super().__init__()

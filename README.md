@@ -1,7 +1,7 @@
 # INF368A Exercise 1
 **Odin Hoff Gardå**
 
-![Plankton](plankton.png)
+![Plankton](figs/plankton.png)
 
 ## Quick Start
 To generate everything from scratch, run the following python files in the order they are listed.
@@ -126,7 +126,7 @@ The data is split into train (75%), validation (5%) and test data (20%) using a 
 
 To train the network, execute `train.py`. The best model is saved to `checkpoints/best.pth` and will be used in the following tasks. Furthermore, a plot showing loss and accuracy for both the train and validation data is saved to `training_plot.png`.
 
-![Loss and accuracy plot during](training_plot.png)
+![Loss and accuracy plot during](figs/training_plot.png)
 
 The classifier takes approximately 1 minute to train on the selected dataset (with early stopping).
 
@@ -152,14 +152,14 @@ To compute and save embeddings (activations in the second to last layer) as pick
 To compute average distances, run `compute_average_distances.py`.
 
 ### Average Euclidean distances between classes
-![Average euclidean distances for test data](average_euclidean_distances_test.png)
-![Average euclidean distances for unseen classes](average_euclidean_distances_unseen.png)
+![Average euclidean distances for test data](figs/average_euclidean_distances_test.png)
+![Average euclidean distances for unseen classes](figs/average_euclidean_distances_unseen.png)
 
 The above matrices shows the average Euclidean distances between classes for the test data, and the unseen classes, respectively. For embeddings of the *test data*, we see that the average distance between samples from the same class is significantly smaller than the average distance between samples from different classes. There is also some separation between the embeddings of the *unseen* classes although the two last unseen classes seems more difficult to tell apart based on these average distances. 
 
 ### Average angular (cosine) distances between classes
-![Average angular distances for test data](average_angular_distances_test.png)
-![Average angular distances for unseen classes](average_angular_distances_unseen.png)
+![Average angular distances for test data](figs/average_angular_distances_test.png)
+![Average angular distances for unseen classes](figs/average_angular_distances_unseen.png)
 
 For the average angular distances, we observe the same thing as above: the classes our classifier has trained on have good separation. The last two unseen classes seems to be closer in average angular distance.
 
@@ -169,19 +169,19 @@ To obtain the plots in this task, run `dimensionality_reduction.py`.
 ### Dimensionality reduction via UMAP
 First, we randomly sample some of the images (~2000) from each of the datasets (train data, test data and unseen classes). Then we compute the embeddings of these points and fit UMAP on them reducing the dimensions from 128 to 2. At last, we plot the output from UMAP for each of the datasets and save the plot to `umap_embeddings.png`. Dimensionality reduction using t-SNE was also tested but was slower and did not give a noticeable better separation. Two dimension was choosen because it is easy to visualise in scatter plots.
 
-![UMAP of embeddings](umap_embeddings.png)
+![UMAP of embeddings](figs/umap_embeddings.png)
 
 We see that the classes the classifier is trained on are well-separated even in 2 dimensions after applying UMAP. This holds true for both the test data and the training data. There seems to be some slight confusion in the test data between *Codonellopsis* and a few other classes. For the unseen classes, we observe some separation, but also some overlap. Especially the third unseen class *Chaetoceros*, overlap with both other unseen classes.
 
 ### Close and far-away samples
 We compute the center for each class and show the 5 closest images and the 5 furthest away images with respect to the Euclidean distance to their class center. We also find the 5 closest images from other classes. The *first* and *second row* shows the closest and furthest away images within the class, respectively. The *bottom row* shows the closest images from other classes. In this task we use samples from the training data.
 
-![Closest and furthest away samples in class 0](close_faraway_closeotherclass_class_0.png)
-![Closest and furthest away samples in class 1](close_faraway_closeotherclass_class_1.png)
-![Closest and furthest away samples in class 2](close_faraway_closeotherclass_class_2.png)
-![Closest and furthest away samples in class 3](close_faraway_closeotherclass_class_3.png)
-![Closest and furthest away samples in class 4](close_faraway_closeotherclass_class_4.png)
-![Closest and furthest away samples in class 5](close_faraway_closeotherclass_class_5.png)
+![Closest and furthest away samples in class 0](figs/close_faraway_closeotherclass_class_0.png)
+![Closest and furthest away samples in class 1](figs/close_faraway_closeotherclass_class_1.png)
+![Closest and furthest away samples in class 2](figs/close_faraway_closeotherclass_class_2.png)
+![Closest and furthest away samples in class 3](figs/close_faraway_closeotherclass_class_3.png)
+![Closest and furthest away samples in class 4](figs/close_faraway_closeotherclass_class_4.png)
+![Closest and furthest away samples in class 5](figs/close_faraway_closeotherclass_class_5.png)
 
 ## Task 8
 To generate accuracy plots for this task, run `transfer_learning.py`. We load the previously computed embeddings of the unseen classes from `embeddings_unseen.pkl` and split this into training (65%) and test (35%) data. Using more and more of the training data, we fit three classifiers and evaluate them on the test data:
@@ -192,6 +192,6 @@ To generate accuracy plots for this task, run `transfer_learning.py`. We load th
 
 The following plots show the test accuracy for each classifier with respect to the size of training data used.
 
-![Test accuracy SVC](accuracy_SVC.png)
-![Test accuracy Linear Classifier](accuracy_Linear.png)
-![Test accuracy kNN](accuracy_kNN.png)
+![Test accuracy SVC](figs/accuracy_SVC.png)
+![Test accuracy Linear Classifier](figs/accuracy_Linear.png)
+![Test accuracy kNN](figs/accuracy_kNN.png)
