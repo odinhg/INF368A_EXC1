@@ -99,6 +99,6 @@ if __name__ == "__main__":
         header_text = F.to_tensor(header_text) 
         image = torch.cat([header_text, in_class_images[i], other_class_images[i]], dim=1)
         image = F.to_pil_image(image)
-        image.save(f"close_faraway_closeotherclass_class_{i}.png")
+        image.save(join("figs", f"close_faraway_closeotherclass_class_{i}.png"))
 
         
