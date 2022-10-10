@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from itertools import chain
-from os.path import isfile, join
+from os.path import isfile
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline

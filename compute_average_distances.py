@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from os.path import isfile, join
+from os.path import isfile
 from tqdm import tqdm
 from configfile import *
 from scipy.spatial.distance import cdist

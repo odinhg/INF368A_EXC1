@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import torch.optim as optim
 import torch.nn as nn
-from os import listdir
 from os.path import isfile, join
 from tqdm import tqdm
 from configfile import *

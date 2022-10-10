@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 import pandas as pd
-from os.path import isfile, join
+from os.path import join
 from tqdm import tqdm
 from scipy.spatial.distance import cdist
 import matplotlib.pyplot as plt
