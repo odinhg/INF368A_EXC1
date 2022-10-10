@@ -4,9 +4,10 @@ from dataloader import FlowCamDataLoader
 torch.manual_seed(0)
 
 # Settings
-class_names_all = ["chainthin", "darksphere", "Rhabdonellidae", "Odontella", "Codonellopsis", "Neoceratium", "Retaria", "Thalassionematales", "Chaetoceros"]
-class_idx = [0, 1, 2, 3, 4, 5]
-class_idx_unseen = [6, 7, 8]
+#class_names_all = ["chainthin", "darksphere", "Rhabdonellidae", "Odontella", "Codonellopsis", "Neoceratium", "Retaria", "Thalassionematales", "Chaetoceros"]
+class_names_all = ["chainthin", "darksphere", "Rhabdonellidae", "Odontella", "Codonellopsis", "Neoceratium", "Retaria", "Thalassionematales", "Chaetoceros", "Neoceratium pentagonum", "Dinophyceae", "Coscinodiscaceae", "Melosiraceae"]
+class_idx = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+class_idx_unseen = [9, 10, 11, 12]
 
 class_names = [class_names_all[i] for i in class_idx]
 class_names_unseen = [class_names_all[i] for i in class_idx_unseen]
