@@ -27,8 +27,14 @@ To generate everything from scratch, run the following python files in the order
 	- Use embeddings to train an SVC, linear classifier and a kNN classifier and evaluates these.
 	- Saves plot showing test accuracy as a function of how much of the training data where used.
 
+## Quicker Start
+Run ```python train.py; python evaluate.py; python embed.py; python compute_average_distances.py; python dimensionality_reduction.py; python transfer_learning.py```
+
+## Quickest Start
+Do not run anything, just trust that everything works nicely and read this report.
+
 ## Task 1 and 2
-### Seen classes
+### Classes we train on
 The following classes (with around 1-2k images each) where used for the train/validation/test data:
 
 - **chainthin:** 1747 images (21.37%). 
@@ -54,6 +60,8 @@ The following classes where selected as unseen classes:
 - **Chaetoceros:** 2435 images (52.22%).
 
 **Total:** 4663 images.
+
+Which classes are to be used can easily be changed in `configfile.py`. The particular classes above where selected because they all have a good number of samples each. The classes are also more or less balanced which makes one less thing to worry about.
 
 ## Task 3
 ### Architecure / Backbone
@@ -122,13 +130,13 @@ The model returns activation from the second last layer in its forward pass meth
 - *Learning rate:* 0.0014
 - *Batch size:* 64
 
-The data is split into train (75%), validation (5%) and test data (20%) using a custom data loader. The classifier trains for a maximum of 50 epochs, but has early stopping implemented. All images are resized to 128x128 pixels in the dataloader. All the above parameters can be changed in `configfile.py`.
+The data is split into train (75%), validation (5%) and test data (20%) using a custom data loader. The classifier trains for a maximum of 50 epochs, but has early stopping implemented. All images are resized to 128x128 pixels in the dataloader. The above parameters can be changed in `configfile.py`.
 
-To train the network, execute `train.py`. The best model is saved to `checkpoints/best.pth` and will be used in the following tasks. Furthermore, a plot showing loss and accuracy for both the train and validation data is saved to `training_plot.png`.
+To train the network, run `train.py`. The best model is saved to `checkpoints/best.pth` and will be used in the following tasks. Furthermore, a plot showing loss and accuracy for both the train and validation data is saved to `training_plot.png`.
 
 ![Loss and accuracy plot during](figs/training_plot.png)
 
-The classifier takes approximately 1 minute to train on the selected dataset (with early stopping).
+The classifier takes approximately 1 minute to train on the selected dataset (with early stopping). During early stages on training, we see that validation accuracy actually exceeds training accuracy. This might happen because of the dropout layer which is deactivated during validation.
 
 ### Accuracies on test data
 To evaluate the classifier on test data, run `evaluate.py`.
@@ -155,23 +163,23 @@ To compute average distances, run `compute_average_distances.py`.
 ![Average euclidean distances for test data](figs/average_euclidean_distances_test.png)
 ![Average euclidean distances for unseen classes](figs/average_euclidean_distances_unseen.png)
 
-The above matrices shows the average Euclidean distances between classes for the test data, and the unseen classes, respectively. For embeddings of the *test data*, we see that the average distance between samples from the same class is significantly smaller than the average distance between samples from different classes. There is also some separation between the embeddings of the *unseen* classes although the two last unseen classes seems more difficult to tell apart based on these average distances. 
+The above matrices shows the average Euclidean distances between classes for the test data, and the unseen classes, respectively. For embeddings of the *test data*, we see that the average distance between samples from the same class is significantly smaller than the average distance between samples from different classes. In other words, on average, there is good separation of the classes. There is also some separation between the embeddings of the *unseen* classes. The first class, *Retaria*, has a large average distance to the other classes. The last two classes on the other hand, are pretty close in average distance.
 
 ### Average angular (cosine) distances between classes
 ![Average angular distances for test data](figs/average_angular_distances_test.png)
 ![Average angular distances for unseen classes](figs/average_angular_distances_unseen.png)
 
-For the average angular distances, we observe the same thing as above: the classes our classifier has trained on have good separation. The last two unseen classes seems to be closer in average angular distance.
+For the average angular distances, we observe the same thing as above in the Euclidean case: the classes our classifier has trained on have good separation. The last two unseen classes seems to be even closer in average angular distance.
 
 ## Task 6 and 7
 To obtain the plots in this task, run `dimensionality_reduction.py`.
 
 ### Dimensionality reduction via UMAP
-First, we randomly sample some of the images (~2000) from each of the datasets (train data, test data and unseen classes). Then we compute the embeddings of these points and fit UMAP on them reducing the dimensions from 128 to 2. At last, we plot the output from UMAP for each of the datasets and save the plot to `umap_embeddings.png`. Dimensionality reduction using t-SNE was also tested but was slower and did not give a noticeable better separation. Two dimension was choosen because it is easy to visualise in scatter plots.
+First, we randomly sample some of the images (~2000) from each of the datasets (train data, test data and unseen classes). We then compute the embeddings of these points and fit UMAP on them reducing the dimensions from 128 to 2. At last, we plot the output from UMAP for each of the datasets and save the plot to `umap_embeddings.png`. Dimensionality reduction using t-SNE was also tested but was slower and did not give a noticeable better separation. Two dimension was choosen because it is easy to visualise in scatter plots.
 
 ![UMAP of embeddings](figs/umap_embeddings.png)
 
-We see that the classes the classifier is trained on are well-separated even in 2 dimensions after applying UMAP. This holds true for both the test data and the training data. There seems to be some slight confusion in the test data between *Codonellopsis* and a few other classes. For the unseen classes, we observe some separation, but also some overlap. Especially the third unseen class *Chaetoceros*, overlap with both other unseen classes.
+We see that the classes the classifier is trained on are well-separated even in 2 dimensions after applying UMAP. This holds true for both the test data and the training data. There seems to be some slight confusion in the test data between *Codonellopsis* and a few other classes. For the unseen classes, we observe some separation, but also some overlap. Especially the third unseen class *Chaetoceros*, overlap with both of the other unseen classes.
 
 ### Close and far-away samples
 We compute the center for each class and show the 5 closest images and the 5 furthest away images with respect to the Euclidean distance to their class center. We also find the 5 closest images from other classes. The *first* and *second row* shows the closest and furthest away images within the class, respectively. The *bottom row* shows the closest images from other classes. In this task we use samples from the training data.
@@ -195,3 +203,5 @@ The following plots show the test accuracy for each classifier with respect to t
 ![Test accuracy SVC](figs/accuracy_SVC.png)
 ![Test accuracy Linear Classifier](figs/accuracy_Linear.png)
 ![Test accuracy kNN](figs/accuracy_kNN.png)
+
+From the plots, all three classifiers seems to max out at around 80% accuracy on the test data. The linear classifier does a pretty good job even with a very low number of training samples. However, the accuracy plot exhibits a high variance. It would be interesting to re-run the experiment with a larger unseen dataset with more classes. This is easy to do by modifying the config file, but then *someone* would have to rewrite this report.
